@@ -65,15 +65,13 @@ public struct StreamNotification {
 }
 
 // MARK: StreamViewController
-public class StreamViewController: BaseElloViewController {
+public final class StreamViewController: BaseElloViewController {
 
     @IBOutlet weak public var collectionView: UICollectionView!
     @IBOutlet weak public var noResultsLabel: UILabel!
     @IBOutlet weak public var noResultsTopConstraint: NSLayoutConstraint!
     private let defaultNoResultsTopConstant: CGFloat = 113
     var canLoadNext = false
-
-    var streamables: [Streamable]?
 
     var currentJSONables = [JSONAble]()
 
