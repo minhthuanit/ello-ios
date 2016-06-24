@@ -132,6 +132,7 @@ public struct InterfaceString {
     }
 
     public struct Post {
+        static let DefaultTitle = NSLocalizedString("Post Detail", comment: "Default post title")
         static let LovedByList = NSLocalizedString("Loved by", comment: "Loved by list title")
         static let RepostedByList = NSLocalizedString("Reposted by", comment: "Reposted by list title")
 
