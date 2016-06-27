@@ -76,6 +76,7 @@
 		1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */; };
 		1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
 		1207C9B11C7538D100939ADB /* ShareElloProviderLinkOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */; };
+		120DDA5D1D1DDD2800007C8C /* PostDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120DDA5C1D1DDD2700007C8C /* PostDetailGenerator.swift */; };
 		120FF6C61C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C51C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift */; };
 		120FF6C81C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */; };
 		120FF6C91C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */; };
@@ -235,6 +236,7 @@
 		12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */; };
 		1243576A1A8927BF008B24FB /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124357691A8927BF008B24FB /* NotificationsViewController.swift */; };
 		12450FD51AC86F630084BDBA /* StreamToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12450FD41AC86F630084BDBA /* StreamToggleCell.xib */; };
+		1245ED381D1C772400929DD4 /* StreamGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1245ED371D1C772400929DD4 /* StreamGenerator.swift */; };
 		1247275F1AB146C5000079D7 /* asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 1247275E1AB146C5000079D7 /* asset.json */; };
 		124727631AB14AA0000079D7 /* AssetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124727621AB14AA0000079D7 /* AssetSpec.swift */; };
 		124727651AB14AC8000079D7 /* ImageAttachmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124727641AB14AC8000079D7 /* ImageAttachmentSpec.swift */; };
@@ -980,6 +982,7 @@
 		1207C9991C750E4B00939ADB /* ShareTrackerOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareTrackerOverrides.swift; sourceTree = "<group>"; };
 		1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloProviderLinkExension.swift; sourceTree = "<group>"; };
 		1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareElloProviderLinkOverrides.swift; sourceTree = "<group>"; };
+		120DDA5C1D1DDD2700007C8C /* PostDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGenerator.swift; sourceTree = "<group>"; };
 		120FF6C51C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAttachmentProcessorSpec.swift; sourceTree = "<group>"; };
 		120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessor.swift; sourceTree = "<group>"; };
 		120FF6CA1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessorSpec.swift; sourceTree = "<group>"; };
@@ -1038,6 +1041,7 @@
 		12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensionsSpec.swift; path = specs/Extensions/UIViewExtensionsSpec.swift; sourceTree = SOURCE_ROOT; };
 		124357691A8927BF008B24FB /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		12450FD41AC86F630084BDBA /* StreamToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamToggleCell.xib; path = sources/controllers/stream/Cells/StreamToggleCell.xib; sourceTree = SOURCE_ROOT; };
+		1245ED371D1C772400929DD4 /* StreamGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamGenerator.swift; sourceTree = "<group>"; };
 		1247275E1AB146C5000079D7 /* asset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = asset.json; path = resources/StubbedResponses/asset.json; sourceTree = SOURCE_ROOT; };
 		124727621AB14AA0000079D7 /* AssetSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AssetSpec.swift; path = Specs/Model/Regions/AssetSpec.swift; sourceTree = SOURCE_ROOT; };
 		124727641AB14AC8000079D7 /* ImageAttachmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAttachmentSpec.swift; sourceTree = "<group>"; };
@@ -2145,6 +2149,8 @@
 				121700B81A7891B300EBACA5 /* StreamImageViewer.swift */,
 				128D36A51A95174C00622833 /* StreamKind.swift */,
 				121700981A7841C400EBACA5 /* StreamViewController.swift */,
+				1245ED371D1C772400929DD4 /* StreamGenerator.swift */,
+				120DDA5C1D1DDD2700007C8C /* PostDetailGenerator.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -4509,6 +4515,7 @@
 				122B30D51C6A3FBC00C1B9D8 /* Notification.swift in Sources */,
 				128D36B91A951F7400622833 /* ProfileHeaderCellPresenter.swift in Sources */,
 				76B1A63F1AE5864900110D30 /* StreamEmbedCellPresenter.swift in Sources */,
+				1245ED381D1C772400929DD4 /* StreamGenerator.swift in Sources */,
 				1207C97F1C73FEE000939ADB /* ElloURI.swift in Sources */,
 				1D807D9E1B051DE6009B0F71 /* FollowAllCellPresenter.swift in Sources */,
 				86D8D8FE1B1798B200CC8D6C /* RelationshipControl.swift in Sources */,
@@ -4540,6 +4547,7 @@
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,
 				76B0B18F1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift in Sources */,
+				120DDA5D1D1DDD2800007C8C /* PostDetailGenerator.swift in Sources */,
 				1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */,
 				122B30EE1C6A3FC500C1B9D8 /* Attachment.swift in Sources */,
 				1DF4040C1B151BE70073460B /* UITabBarExtensions.swift in Sources */,
