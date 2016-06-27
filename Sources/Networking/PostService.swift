@@ -48,7 +48,7 @@ public struct PostService {
             ElloAPI.PostComments(postId: postId),
             success: { (data, responseConfig) in
                 if let comments = data as? [ElloComment] {
-                    Preloader().preloadImages(comments, streamKind:  .PostDetail(postParam: postId))
+                    Preloader().preloadImages(comments)
                     success(comments: comments, responseConfig: responseConfig)
                 }
                 else if let failure = failure {
@@ -69,7 +69,7 @@ public struct PostService {
             ElloAPI.PostLovers(postId: postId),
             success: { (data, responseConfig) in
                 if let users = data as? [User] {
-                    Preloader().preloadImages(users, streamKind: .PostDetail(postParam: postId))
+                    Preloader().preloadImages(users)
                     success(users: users, responseConfig: responseConfig)
                 }
                 else if let failure = failure {
@@ -90,7 +90,7 @@ public struct PostService {
             ElloAPI.PostReposters(postId: postId),
             success: { (data, responseConfig) in
                 if let users = data as? [User] {
-                    Preloader().preloadImages(users, streamKind: .PostDetail(postParam: postId))
+                    Preloader().preloadImages(users)
                     success(users: users, responseConfig: responseConfig)
                 }
                 else if let failure = failure {
