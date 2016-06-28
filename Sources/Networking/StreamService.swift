@@ -6,6 +6,7 @@ import Moya
 
 public typealias StreamSuccessCompletion = (jsonables: [JSONAble], responseConfig: ResponseConfig) -> Void
 public typealias UserSuccessCompletion = (user: User, responseConfig: ResponseConfig) -> Void
+public typealias UserPostsSuccessCompletion = (posts: [Post], responseConfig: ResponseConfig) -> Void
 
 public struct StreamLoadedNotifications {
     static let streamLoaded = TypedNotification<StreamKind>(name: "StreamLoadedNotification")
@@ -56,6 +57,26 @@ public class StreamService: NSObject {
                 if let user = data as? User {
                     Preloader().preloadImages([user])
                     success(user: user, responseConfig: responseConfig)
+                }
+                else {
+                    ElloProvider.unCastableJSONAble(failure)
+                }
+            },
+            failure: failure
+        )
+    }
+
+    public func loadUserPosts(
+        userId: String,
+        success: UserPostsSuccessCompletion,
+        failure: ElloFailureCompletion)
+    {
+        ElloProvider.shared.elloRequest(
+            ElloAPI.UserStreamPosts(userId: userId),
+            success: { (data, responseConfig) in
+                if let posts = data as? [Post] {
+                    Preloader().preloadImages(posts)
+                    success(posts: posts, responseConfig: responseConfig)
                 }
                 else {
                     ElloProvider.unCastableJSONAble(failure)

@@ -2,6 +2,7 @@ public final class PostDetailGenerator: StreamGenerator {
 
     public let currentUser: User?
     public var streamKind: StreamKind
+    // TODO: make destination weak
     public var destination: StreamDestination
 
     private var post: Post?
@@ -28,6 +29,10 @@ public final class PostDetailGenerator: StreamGenerator {
 
     public var items: [StreamCellItem] {
         get {
+            guard postItems.count > 0 else {
+                return []
+            }
+
             return [
                 postItems,
                 loversItems,
@@ -80,6 +85,7 @@ private extension PostDetailGenerator {
             success: { (post, responseConfig) in
                 print("loaded post: \(post.id)")
                 self.post = post
+                // TODO: make sure this responseConfig is what we want. We might want to use the comments response config
                 self.destination.setPagingConfig(responseConfig)
                 self.destination.setPrimaryJSONAble(post)
                 self.postItems = self.parse([post])

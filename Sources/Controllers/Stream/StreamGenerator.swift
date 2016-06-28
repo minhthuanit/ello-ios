@@ -2,7 +2,7 @@ import Foundation
 
 public protocol StreamGenerator {
 
-    mutating func bind()
+    func bind()
 
     var items: [StreamCellItem] { get }
     var currentUser: User? { get }

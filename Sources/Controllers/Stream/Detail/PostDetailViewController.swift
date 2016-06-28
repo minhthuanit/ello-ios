@@ -191,6 +191,7 @@
 
 }
 
+// MARK: PostDetailViewController: StreamDestination
 extension PostDetailViewController: StreamDestination {
 
     public func setItems(items: [StreamCellItem]) {
