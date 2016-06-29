@@ -75,3 +75,13 @@ public final class StreamCellItem: NSObject, NSCopying {
     }
 
 }
+
+
+func == (lhs: StreamCellItem, rhs: StreamCellItem) -> Bool {
+    switch (lhs.type, rhs.type) {
+    case let (.Placeholder(lhsType), .Placeholder(rhsType)):
+        return lhsType == rhsType
+    default:
+        return lhs === rhs
+    }
+}

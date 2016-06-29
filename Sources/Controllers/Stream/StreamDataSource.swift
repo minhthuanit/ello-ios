@@ -72,7 +72,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func indexPathForItem(item: StreamCellItem) -> NSIndexPath? {
-        if let index = self.visibleCellItems.indexOf(item) {
+        if let index = self.visibleCellItems.indexOf({$0 == item}) {
             return NSIndexPath(forItem: index, inSection: 0)
         }
         return nil
