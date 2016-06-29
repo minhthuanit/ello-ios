@@ -3,45 +3,10 @@ public final class PostDetailGenerator: StreamGenerator {
     public let currentUser: User?
     public var streamKind: StreamKind
     // TODO: make destination weak
-    public var destination: StreamDestination
+    weak public var destination: StreamDestination?
 
     private var post: Post?
     private let postParam: String
-    private var postItems = [StreamCellItem]()
-    private var loversItems = [StreamCellItem]()
-    private var repostersItems = [StreamCellItem]()
-    private var commentItems = [StreamCellItem]()
-
-    private var staticItems: [StreamCellItem] {
-        get {
-            var staticItems = [StreamCellItem]()
-            if loversItems.count + repostersItems.count > 0 {
-                staticItems.append(StreamCellItem(jsonable: JSONAble.fromJSON([:], fromLinked: false), type: .Spacer(height: 8.0)))
-            }
-            // add in the comment button if we have a current user
-            let commentingEnabled = self.post?.author?.hasCommentingEnabled ?? true
-            if let currentUser = currentUser where commentingEnabled, let post = post {
-                staticItems.append(StreamCellItem(jsonable: ElloComment.newCommentForPost(post, currentUser: currentUser), type: .CreateComment))
-            }
-            return staticItems
-        }
-    }
-
-    public var items: [StreamCellItem] {
-        get {
-            guard postItems.count > 0 else {
-                return []
-            }
-
-            return [
-                postItems,
-                loversItems,
-                repostersItems,
-                staticItems,
-                commentItems
-            ].flatMap { $0 }
-        }
-    }
 
     init(currentUser: User?,
          postParam: String,
@@ -57,6 +22,13 @@ public final class PostDetailGenerator: StreamGenerator {
     }
 
     public func bind() {
+        destination?.setPlaceholders([
+            StreamCellItem(type: .Placeholder(.PostHeader)),
+            StreamCellItem(type: .Placeholder(.PostLovers)),
+            StreamCellItem(type: .Placeholder(.PostReposters)),
+            StreamCellItem(type: .Placeholder(.PostComments)),
+        ])
+
         setInitialPost()
         loadPost()
         loadPostComments()
@@ -70,10 +42,10 @@ private extension PostDetailGenerator {
     func setInitialPost() {
         guard let post = post else { return }
 
-        destination.setPrimaryJSONAble(post)
+        destination?.setPrimaryJSONAble(post)
         if post.content?.count > 0 {
-            postItems = parse([post])
-            destination.setItems(items)
+            let postItems = parse([post])
+            destination?.replacePlaceholder(.PostHeader, items: postItems)
         }
     }
 
@@ -82,29 +54,32 @@ private extension PostDetailGenerator {
         PostService().loadPost(
             postParam,
             needsComments: false,
-            success: { (post, responseConfig) in
+            success: { [weak self] (post, responseConfig) in
                 print("loaded post: \(post.id)")
-                self.post = post
+                guard let sself = self else { return }
+                sself.post = post
                 // TODO: make sure this responseConfig is what we want. We might want to use the comments response config
-                self.destination.setPagingConfig(responseConfig)
-                self.destination.setPrimaryJSONAble(post)
-                self.postItems = self.parse([post])
-                self.destination.setItems(self.items)
+                sself.destination?.setPagingConfig(responseConfig)
+                sself.destination?.setPrimaryJSONAble(post)
+                let postItems = sself.parse([post])
+                sself.destination?.replacePlaceholder(.PostHeader, items: postItems)
             },
-            failure: { _ in
-                self.destination.primaryJSONAbleNotFound()
+            failure: { [weak self] _ in
+                guard let sself = self else { return }
+                sself.destination?.primaryJSONAbleNotFound()
         })
     }
 
     func loadPostComments() {
         PostService().loadPostComments(
             postParam,
-            success: { (comments, responseConfig) in
+            success: { [weak self] (comments, responseConfig) in
+                guard let sself = self else { return }
                 print("loaded comments: \(comments.count)")
-                self.commentItems = self.parse(comments)
-                self.destination.setItems(self.items)
+                let commentItems = sself.parse(comments)
+                sself.destination?.replacePlaceholder(.PostComments, items: commentItems)
             },
-            failure: { (error, statusCode) in
+            failure: { _ in
                 print("failed load post comments")
         })
     }
@@ -112,18 +87,19 @@ private extension PostDetailGenerator {
     func loadPostLovers() {
         PostService().loadPostLovers(
             postParam,
-            success: { (users, _) in
+            success: { [weak self] (users, _) in
                 print("loaded lovers: \(users.count)")
+                guard let sself = self else { return }
                 guard users.count > 0 else { return }
 
-                self.loversItems = self.userAvatarCellItems(
+                let loversItems = sself.userAvatarCellItems(
                     users,
                     icon: .Heart,
                     seeMoreTitle: InterfaceString.Post.LovedByList
                 )
-                self.destination.setItems(self.items)
+                sself.destination?.replacePlaceholder(.PostLovers, items: loversItems)
             },
-            failure: { (error, statusCode) in
+            failure: { _ in
                 print("failed load post lovers")
         })
     }
@@ -131,18 +107,19 @@ private extension PostDetailGenerator {
     func loadPostReposters() {
         PostService().loadPostReposters(
             postParam,
-            success: { (users, _) in
+            success: { [weak self] (users, _) in
                 print("loaded reposters: \(users.count)")
+                guard let sself = self else { return }
                 guard users.count > 0 else { return }
 
-                self.repostersItems = self.userAvatarCellItems(
+                let repostersItems = sself.userAvatarCellItems(
                     users,
                     icon: .Repost,
                     seeMoreTitle: InterfaceString.Post.RepostedByList
                 )
-                self.destination.setItems(self.items)
+                sself.destination?.replacePlaceholder(.PostReposters, items: repostersItems)
             },
-            failure: { (error, statusCode) in
+            failure: { _ in
                 print("failed load post reposters")
         })
     }

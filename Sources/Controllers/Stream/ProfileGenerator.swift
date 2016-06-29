@@ -2,12 +2,10 @@ public final class ProfileGenerator: StreamGenerator {
 
     public let currentUser: User?
     public var streamKind: StreamKind
-    public var destination: StreamDestination
+    weak public var destination: StreamDestination?
 
     private var user: User?
     private let userParam: String
-    private var userPostItems = [StreamCellItem]()
-    private var parser = StreamCellItemParser()
 
     func headerItems() -> [StreamCellItem] {
         guard let user = user else { return [] }
@@ -20,20 +18,11 @@ public final class ProfileGenerator: StreamGenerator {
         ]
     }
 
-    public var items: [StreamCellItem] {
-        get {
-            return [
-                headerItems(),
-                userPostItems
-            ].flatMap { $0 }
-        }
-    }
-
     init(currentUser: User?,
          userParam: String,
          user: User?,
          streamKind: StreamKind,
-         destination: StreamDestination
+         destination: StreamDestination?
         ) {
         self.currentUser = currentUser
         self.user = user
@@ -43,6 +32,11 @@ public final class ProfileGenerator: StreamGenerator {
     }
 
     public func bind() {
+        destination?.setPlaceholders([
+            StreamCellItem(type: .Placeholder(.ProfileHeader)),
+            StreamCellItem(type: .Placeholder(.ProfilePosts)),
+        ])
+
         setInitialUser()
         loadUser()
         loadUserPosts()
@@ -54,8 +48,8 @@ private extension ProfileGenerator {
     func setInitialUser() {
         guard let user = user else { return }
 
-        destination.setPrimaryJSONAble(user)
-        destination.setItems(items)
+        destination?.setPrimaryJSONAble(user)
+        destination?.replacePlaceholder(.ProfileHeader, items: headerItems())
     }
 
     func loadUser() {
@@ -63,26 +57,30 @@ private extension ProfileGenerator {
         StreamService().loadUser(
             streamKind.endpoint,
             streamKind: streamKind,
-            success: { (user, responseConfig) in
-                self.user = user
-                self.destination.setPagingConfig(responseConfig)
-                self.destination.setPrimaryJSONAble(user)
-                self.destination.setItems(self.items)
+            success: { [weak self] (user, responseConfig) in
+                guard let sself = self else { return }
+                sself.user = user
+                sself.destination?.setPagingConfig(responseConfig)
+                sself.destination?.setPrimaryJSONAble(user)
+                sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems())
             },
-            failure: { _ in
-                self.destination.primaryJSONAbleNotFound()
+            failure: { [weak self] _ in
+                guard let sself = self else { return }
+                sself.destination?.primaryJSONAbleNotFound()
         })
     }
 
     func loadUserPosts() {
         StreamService().loadUserPosts(
             userParam,
-            success: { (posts, responseConfig) in
-                self.userPostItems = self.parse(self.parser, jsonables: posts)
-                self.destination.setItems(self.items)
+            success: { [weak self] (posts, responseConfig) in
+                guard let sself = self else { return }
+                let userPostItems = sself.parse(posts)
+                sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
             },
-            failure: { _ in
-                self.destination.primaryJSONAbleNotFound()
+            failure: { [weak self] _ in
+                guard let sself = self else { return }
+                sself.destination?.primaryJSONAbleNotFound()
         })
     }
 }

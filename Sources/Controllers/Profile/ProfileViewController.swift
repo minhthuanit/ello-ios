@@ -473,7 +473,11 @@ extension ProfileViewController {
 // MARK: ProfileViewController: StreamDestination
 extension ProfileViewController:  StreamDestination {
 
-    public func setItems(items: [StreamCellItem]) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem]) {
+        streamViewController.replacePlaceholder(type, with: items)
+    }
+
+    public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         updateNoPostsView(items.count < 2)
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in }

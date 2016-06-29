@@ -194,7 +194,11 @@
 // MARK: PostDetailViewController: StreamDestination
 extension PostDetailViewController: StreamDestination {
 
-    public func setItems(items: [StreamCellItem]) {
+    public func replacePlaceholder(type: StreamCellType.PlaceholderType, @autoclosure items: () -> [StreamCellItem]) {
+        streamViewController.replacePlaceholder(type, with: items)
+    }
+
+    public func setPlaceholders(items: [StreamCellItem]) {
         streamViewController.clearForInitialLoad()
         streamViewController.appendUnsizedCellItems(items, withWidth: view.frame.width) { _ in
             if let scrollToComment = self.scrollToComment {

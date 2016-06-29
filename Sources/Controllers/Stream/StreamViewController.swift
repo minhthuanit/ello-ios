@@ -273,7 +273,16 @@ public final class StreamViewController: BaseElloViewController {
     public func replacePlaceholder(placeholderType: StreamCellType.PlaceholderType, @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem]) {
         if let indexPath = dataSource.indexPathForItem(StreamCellItem(type: .Placeholder(placeholderType))) {
             let streamCellItems = streamCellItemsGenerator()
-            dataSource.replaceItem(at: indexPath, with: streamCellItems)
+            let newIndexPaths = dataSource.replaceItem(at: indexPath, with: streamCellItems)
+            UIView.setAnimationsEnabled(false)
+            collectionView.performBatchUpdates({
+                self.collectionView.deleteItemsAtIndexPaths([indexPath])
+                self.collectionView.insertItemsAtIndexPaths(newIndexPaths)
+                }, completion: { finished in
+                    UIView.setAnimationsEnabled(true)
+            })
+
+
         }
     }
 
