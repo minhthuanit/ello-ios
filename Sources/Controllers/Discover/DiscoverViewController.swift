@@ -155,7 +155,7 @@ extension DiscoverViewController {
                 categoryListItem = StreamCellItem(jsonable: categoryList, type: .CategoryList)
             }
             else {
-                categoryListItem = StreamCellItem(type: .Placeholder(.CategoryList))
+                categoryListItem = StreamCellItem(type: .Placeholder, placeholderType: .CategoryList)
             }
             items.append(categoryListItem)
         }

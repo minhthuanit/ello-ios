@@ -78,6 +78,24 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return nil
     }
 
+    public func indexPathsForPlaceholderType(placeholderType: StreamCellType.PlaceholderType) -> [NSIndexPath] {
+
+        guard let index = self.visibleCellItems.indexOf({$0.placeholderType == placeholderType}) else { return [] }
+
+        let indexPath = NSIndexPath(forItem: index, inSection: 0)
+        var indexPaths = [indexPath]
+        var position = indexPath.item
+        var found = true
+        while found && position < self.visibleCellItems.count - 1 {
+            position += 1
+            found = visibleCellItems[position].placeholderType == placeholderType
+            if found {
+                indexPaths.append(NSIndexPath(forItem: position, inSection: 0))
+            }
+        }
+        return indexPaths
+    }
+
     public func userForIndexPath(indexPath: NSIndexPath) -> User? {
         if let item = visibleStreamCellItem(at: indexPath) {
             if case .Header = item.type,
@@ -207,6 +225,18 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
             temporarilyUnfilter() {
                 if let index = self.streamCellItems.indexOf(itemToRemove) {
                     self.streamCellItems.removeAtIndex(index)
+                }
+            }
+        }
+    }
+
+    public func removeItemAtIndexPaths(indexPaths: [NSIndexPath]) {
+        for indexPath in indexPaths {
+            if let itemToRemove = self.visibleCellItems.safeValue(indexPath.item) {
+                temporarilyUnfilter() {
+                    if let index = self.streamCellItems.indexOf(itemToRemove) {
+                        self.streamCellItems.removeAtIndex(index)
+                    }
                 }
             }
         }
@@ -628,8 +658,13 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public func replaceItem(at indexPath: NSIndexPath, with streamCellItems: [StreamCellItem] = []) -> [NSIndexPath] {
         removeItemAtIndexPath(indexPath)
-        let indexPaths = insertStreamCellItems(streamCellItems, startingIndexPath: indexPath)
-        return indexPaths
+        return insertStreamCellItems(streamCellItems, startingIndexPath: indexPath)
+    }
+
+    public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem] = []) -> [NSIndexPath] {
+        guard indexPaths.count > 0 else { return []}
+        removeItemAtIndexPaths(indexPaths)
+        return insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
     }
 
     public func insertStreamCellItems(cellItems: [StreamCellItem], startingIndexPath: NSIndexPath) -> [NSIndexPath] {

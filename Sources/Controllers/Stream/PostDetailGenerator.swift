@@ -22,13 +22,7 @@ public final class PostDetailGenerator: StreamGenerator {
     }
 
     public func bind() {
-        destination?.setPlaceholders([
-            StreamCellItem(type: .Placeholder(.PostHeader)),
-            StreamCellItem(type: .Placeholder(.PostLovers)),
-            StreamCellItem(type: .Placeholder(.PostReposters)),
-            StreamCellItem(type: .Placeholder(.PostComments)),
-        ])
-
+        setPlaceHolders()
         setInitialPost()
         loadPost()
         loadPostComments()
@@ -39,6 +33,16 @@ public final class PostDetailGenerator: StreamGenerator {
 }
 
 private extension PostDetailGenerator {
+
+    func setPlaceHolders() {
+        destination?.setPlaceholders([
+            StreamCellItem(type: .Placeholder, placeholderType: .PostHeader),
+            StreamCellItem(type: .Placeholder, placeholderType: .PostLovers),
+            StreamCellItem(type: .Placeholder, placeholderType: .PostReposters),
+            StreamCellItem(type: .Placeholder, placeholderType: .PostComments)
+        ])
+    }
+
     func setInitialPost() {
         guard let post = post else { return }
 

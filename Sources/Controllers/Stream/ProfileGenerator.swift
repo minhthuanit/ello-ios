@@ -32,11 +32,7 @@ public final class ProfileGenerator: StreamGenerator {
     }
 
     public func bind() {
-        destination?.setPlaceholders([
-            StreamCellItem(type: .Placeholder(.ProfileHeader)),
-            StreamCellItem(type: .Placeholder(.ProfilePosts)),
-        ])
-
+        setPlaceHolders()
         setInitialUser()
         loadUser()
         loadUserPosts()
@@ -45,6 +41,14 @@ public final class ProfileGenerator: StreamGenerator {
 }
 
 private extension ProfileGenerator {
+
+    func setPlaceHolders() {
+        destination?.setPlaceholders([
+            StreamCellItem(type: .Placeholder, placeholderType: .ProfileHeader),
+            StreamCellItem(type: .Placeholder, placeholderType: .ProfilePosts)
+        ])
+    }
+
     func setInitialUser() {
         guard let user = user else { return }
 

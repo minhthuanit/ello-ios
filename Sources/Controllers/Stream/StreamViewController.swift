@@ -271,19 +271,23 @@ public final class StreamViewController: BaseElloViewController {
     }
 
     public func replacePlaceholder(placeholderType: StreamCellType.PlaceholderType, @autoclosure with streamCellItemsGenerator: () -> [StreamCellItem]) {
-        if let indexPath = dataSource.indexPathForItem(StreamCellItem(type: .Placeholder(placeholderType))) {
-            let streamCellItems = streamCellItemsGenerator()
-            let newIndexPaths = dataSource.replaceItem(at: indexPath, with: streamCellItems)
-            UIView.setAnimationsEnabled(false)
-            collectionView.performBatchUpdates({
-                self.collectionView.deleteItemsAtIndexPaths([indexPath])
-                self.collectionView.insertItemsAtIndexPaths(newIndexPaths)
-                }, completion: { finished in
-                    UIView.setAnimationsEnabled(true)
-            })
+        let item = StreamCellItem(type: .Placeholder)
+        item.placeholderType = placeholderType
+        let indexPathsToReplace = dataSource.indexPathsForPlaceholderType(placeholderType)
+        guard indexPathsToReplace.count > 0 else { return }
 
-
+        let streamCellItems = streamCellItemsGenerator()
+        for item in streamCellItems {
+            item.placeholderType = placeholderType
         }
+        let newIndexPaths = dataSource.replaceItems(at: indexPathsToReplace, with: streamCellItems)
+        UIView.setAnimationsEnabled(false)
+        collectionView.performBatchUpdates({
+            self.collectionView.deleteItemsAtIndexPaths(indexPathsToReplace)
+            self.collectionView.insertItemsAtIndexPaths(newIndexPaths)
+            }, completion: { finished in
+                UIView.setAnimationsEnabled(true)
+        })
     }
 
     public var loadInitialPageLoadingToken: String = ""

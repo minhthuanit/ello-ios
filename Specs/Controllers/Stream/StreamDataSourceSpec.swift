@@ -298,6 +298,68 @@ class StreamDataSourceSpec: QuickSpec {
                     subject.streamFilter = { postItem in return false }
                     expect(subject.indexPathForItem(postItem)).to(beNil())
                 }
+
+                it("returns the correct indexPath for same StreamCellItem Placeholder Types") {
+                    let testItem = StreamCellItem(type: .Placeholder)
+                    testItem.placeholderType = .PostHeader
+                    let testItem2 = StreamCellItem(type: .Placeholder)
+                    testItem2.placeholderType = .PostHeader
+
+                    subject.removeAllCellItems()
+                    subject.appendStreamCellItems([testItem])
+
+                    expect(subject.indexPathForItem(testItem2)?.item) == 0
+                }
+
+                it("returns nil for same StreamCellItem Placeholder Types that are not the same") {
+                    let testItem = StreamCellItem(type: .Placeholder)
+                    testItem.placeholderType = .PostHeader
+                    let testItem2 = StreamCellItem(type: .Placeholder)
+                    testItem2.placeholderType = .CategoryList
+                    subject.removeAllCellItems()
+                    subject.appendStreamCellItems([testItem])
+
+                    expect(subject.indexPathForItem(testItem2)).to(beNil())
+                }
+            }
+
+            describe("indpexPathsForPlaceholderType(_:)") {
+
+                beforeEach {
+                    let user = User.stub([:])
+
+                    let profileHeaderItems = [
+                        StreamCellItem(jsonable: user, type: .ProfileHeader, placeholderType: .ProfileHeader),
+                        StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 3), placeholderType: .ProfileHeader),
+                        StreamCellItem(jsonable: user, type: .ColumnToggle, placeholderType: .ProfileHeader),
+                        StreamCellItem(jsonable: user, type: .FullWidthSpacer(height: 5), placeholderType: .ProfileHeader),
+                    ]
+
+                    let postItems = [
+                        StreamCellItem(type: .Header, placeholderType: .ProfilePosts),
+                        StreamCellItem(type: .Footer, placeholderType: .ProfilePosts),
+                    ]
+
+
+                    subject.removeAllCellItems()
+                    subject.appendStreamCellItems(profileHeaderItems + postItems)
+                }
+
+                it("returns the correct indexPaths for profile header") {
+                    let headerIndexPaths = subject.indexPathsForPlaceholderType(.ProfileHeader)
+
+                    expect(headerIndexPaths[0].item) == 0
+                    expect(headerIndexPaths[1].item) == 1
+                    expect(headerIndexPaths[2].item) == 2
+                    expect(headerIndexPaths[3].item) == 3
+                }
+
+                it("returns the correct indexPaths for profile posts") {
+                    let postIndexPaths = subject.indexPathsForPlaceholderType(.ProfilePosts)
+
+                    expect(postIndexPaths[0].item) == 4
+                    expect(postIndexPaths[1].item) == 5
+                }
             }
 
             describe("postForIndexPath(_:)") {
