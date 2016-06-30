@@ -11,12 +11,12 @@ public struct UserAvatarsCellPresenter {
         indexPath: NSIndexPath,
         currentUser: User?)
     {
-        if let cell = cell as? UserAvatarsCell,
-            model = streamCellItem.jsonable as? UserAvatarCellModel
-        {
-            cell.imageView.image = model.icon.normalImage
-            cell.userAvatarCellModel = model
-            cell.loadingLabel.hidden = model.hasUsers
+        guard let cell = cell as? UserAvatarsCell,
+            model = streamCellItem.jsonable as? UserAvatarCellModel else {
+                return
         }
+        cell.imageView.image = model.icon.normalImage
+        cell.userAvatarCellModel = model
+        cell.loadingLabel.hidden = model.hasUsers
     }
 }
