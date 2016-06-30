@@ -14,6 +14,12 @@
     required public init(postParam: String) {
         self.postParam = postParam
         super.init(nibName: nil, bundle: nil)
+        if self.post == nil {
+            if let post = ElloLinkedStore.sharedInstance.getObject(self.postParam,
+                inCollection: MappingType.PostsType.rawValue) as? Post {
+                self.post = post
+            }
+        }
         self.localToken = streamViewController.resetInitialPageLoadingToken()
     }
 

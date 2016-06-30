@@ -49,10 +49,14 @@ public final class ProfileViewController: StreamableViewController {
 
     required public init(userParam: String) {
         self.userParam = userParam
-//        let user = ElloLinkedStore.sharedInstance().getObject(userParam, inCollection: "users")
         self.initialStreamKind = .UserStream(userParam: self.userParam)
         super.init(nibName: "ProfileViewController", bundle: nil)
-
+        if self.user == nil {
+            if let user = ElloLinkedStore.sharedInstance.getObject(self.userParam,
+               inCollection: MappingType.UsersType.rawValue) as? User {
+                self.user = user
+            }
+        }
         sharedInit()
         relationshipChangedNotification = NotificationObserver(notification: RelationshipChangedNotification) { [unowned self] user in
             if self.user?.id == user.id {
