@@ -507,7 +507,7 @@ extension ProfileViewController:  StreamDestination {
             coverImage.image = cachedImage
             self.coverImage.alpha = 1.0
         }
-        else if let cover = user.coverImageURL, coverImage = coverImage
+        else if let cover = user.coverImageURL(viewsAdultContent: currentUser?.viewsAdultContent, animated: true), coverImage = coverImage
         {
             coverImage.pin_setImageFromURL(cover) { result in
                 self.coverImage.alpha = 1.0
