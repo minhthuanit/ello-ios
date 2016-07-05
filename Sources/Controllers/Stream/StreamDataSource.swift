@@ -656,7 +656,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         insertUnsizedCellItems(cellItems, withWidth: withWidth, startingIndexPath: startingIndexPath, completion: completion)
     }
 
-    public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem] = []) -> [NSIndexPath] {
+    public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem]) -> [NSIndexPath] {
         guard indexPaths.count > 0 else { return []}
         removeItemAtIndexPaths(indexPaths)
         return insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
@@ -722,7 +722,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPath.item >= 0 &&  indexPath.item < visibleCellItems.count && indexPath.section == 0
     }
 
-    private func calculateCellItems(cellItems: [StreamCellItem], withWidth: CGFloat, completion: ElloEmptyCompletion) {
+    public func calculateCellItems(cellItems: [StreamCellItem], withWidth: CGFloat, completion: ElloEmptyCompletion) {
         let textCells = filterTextCells(cellItems)
         let imageCells = filterImageCells(cellItems)
         let notificationElements = cellItems.filter {
