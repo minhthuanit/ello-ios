@@ -74,18 +74,15 @@ public struct StreamImageCellPresenter {
                 cell.isGif = true
             }
 
-            let columnWidth: CGFloat
             if streamKind.isGridView {
                 cell.failWidthConstraint.constant = StreamImageCellPresenter.multiColumnFailWidth
                 cell.failHeightConstraint.constant = StreamImageCellPresenter.multiColumnFailHeight
                 attachmentToLoad = attachmentToLoad ?? imageRegion.asset?.gridLayoutAttachment
-                columnWidth = (UIWindow.windowWidth() - 10) / 2
             }
             else {
                 cell.failWidthConstraint.constant = StreamImageCellPresenter.singleColumnFailWidth
                 cell.failHeightConstraint.constant = StreamImageCellPresenter.singleColumnFailHeight
                 attachmentToLoad = attachmentToLoad ?? imageRegion.asset?.oneColumnAttachment
-                columnWidth = UIWindow.windowWidth()
             }
 
             let imageToShow = attachmentToLoad?.image
@@ -94,6 +91,7 @@ public struct StreamImageCellPresenter {
             cell.hideBorder()
             let margin = configureCellWidthAndLayout(cell, imageRegion: imageRegion, streamCellItem: streamCellItem)
             if let attachmentWidth = attachmentToLoad?.width {
+                let columnWidth: CGFloat = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: streamKind.columnCountFor(width: cell.frame.width))
                 preventImageStretching(cell, attachmentWidth: attachmentWidth, columnWidth: columnWidth, leftMargin: margin)
             }
             cell.layoutIfNeeded()

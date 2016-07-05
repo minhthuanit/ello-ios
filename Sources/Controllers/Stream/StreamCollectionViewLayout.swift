@@ -42,23 +42,33 @@ public class StreamCollectionViewLayout: UICollectionViewLayout {
     }
 
     var columnCount: Int {
-        didSet { invalidateLayout() }
+        didSet { if columnCount != oldValue {
+            invalidateLayout()
+        } }
     }
 
     var minimumColumnSpacing: CGFloat {
-        didSet { invalidateLayout() }
+        didSet { if minimumColumnSpacing != oldValue {
+            invalidateLayout()
+        } }
     }
 
     var minimumInteritemSpacing: CGFloat {
-        didSet { invalidateLayout() }
+        didSet { if minimumInteritemSpacing != oldValue {
+            invalidateLayout()
+        } }
     }
 
     var sectionInset: UIEdgeInsets {
-        didSet { invalidateLayout() }
+        didSet { if sectionInset != oldValue {
+            invalidateLayout()
+        } }
     }
 
     var itemRenderDirection: Direction {
-        didSet { invalidateLayout() }
+        didSet { if itemRenderDirection != oldValue {
+            invalidateLayout()
+        } }
     }
 
     weak var delegate: StreamCollectionViewLayoutDelegate? {

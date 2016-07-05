@@ -27,7 +27,7 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
         self.webView.delegate = self
     }
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: StreamTextCellSizeCalculated) {
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: StreamTextCellSizeCalculated) {
         self.completion = completion
         self.cellItems = cellItems
         self.maxWidth = width

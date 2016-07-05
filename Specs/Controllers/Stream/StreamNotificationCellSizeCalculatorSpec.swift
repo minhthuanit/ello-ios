@@ -43,8 +43,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 let activity: Activity = stub(["kind": "new_follower_post", "subject": user])
                 let notification: Notification = stub(["activity": activity])
                 let item = StreamCellItem(jsonable: notification, type: .Notification)
-                subject.processCells([item], withWidth: 320, completion: {
-                })
+                subject.processCells([item], withWidth: 320, columnCount: 1) {
+                }
                 expect(item.calculatedWebHeight) == 0
                 expect(item.calculatedOneColumnCellHeight) == 67
                 expect(item.calculatedMultiColumnCellHeight) == 67
@@ -53,8 +53,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 let activity: Activity = stub(["kind": "repost_notification", "subject": postWithText])
                 let notification: Notification = stub(["activity": activity])
                 let item = StreamCellItem(jsonable: notification, type: .Notification)
-                subject.processCells([item], withWidth: 320, completion: {
-                })
+                subject.processCells([item], withWidth: 320, columnCount: 1) {
+                }
                 expect(item.calculatedWebHeight) == 50
                 expect(item.calculatedOneColumnCellHeight) == 112
                 expect(item.calculatedMultiColumnCellHeight) == 112
@@ -63,8 +63,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 let activity: Activity = stub(["kind": "repost_notification", "subject": postWithImage])
                 let notification: Notification = stub(["activity": activity])
                 let item = StreamCellItem(jsonable: notification, type: .Notification)
-                subject.processCells([item], withWidth: 320, completion: {
-                })
+                subject.processCells([item], withWidth: 320, columnCount: 1) {
+                }
                 expect(item.calculatedOneColumnCellHeight) == 129
                 expect(item.calculatedMultiColumnCellHeight) == 129
             }
@@ -72,8 +72,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 let activity: Activity = stub(["kind": "repost_notification", "subject": postWithTextAndImage])
                 let notification: Notification = stub(["activity": activity])
                 let item = StreamCellItem(jsonable: notification, type: .Notification)
-                subject.processCells([item], withWidth: 320, completion: {
-                })
+                subject.processCells([item], withWidth: 320, columnCount: 1) {
+                }
                 expect(item.calculatedWebHeight) == 50
                 expect(item.calculatedOneColumnCellHeight) == 129
                 expect(item.calculatedMultiColumnCellHeight) == 129
@@ -85,8 +85,8 @@ class StreamNotificationCellSizeCalculatorSpec : QuickSpec {
                 let activity: Activity = stub(["kind": "comment_notification", "subject": postWithText])
                 let notification: Notification = stub(["activity": activity])
                 let item = StreamCellItem(jsonable: notification, type: .Notification)
-                subject.processCells([item], withWidth: 320, completion: {
-                })
+                subject.processCells([item], withWidth: 320, columnCount: 1) {
+                }
                 expect(item.calculatedWebHeight) == 50
                 expect(item.calculatedOneColumnCellHeight) == 157
                 expect(item.calculatedMultiColumnCellHeight) == 157

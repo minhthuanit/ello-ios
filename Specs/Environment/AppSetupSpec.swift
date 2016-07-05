@@ -18,6 +18,9 @@ class AppSetupSpec: QuickSpec {
                 if UIDevice.currentDevice().name == "iPhone Simulator" {
                     expect(AppSetup.sharedState.isSimulator) == true
                 }
+                else if UIDevice.currentDevice().name == "iPad Simulator" {
+                    expect(AppSetup.sharedState.isSimulator) == true
+                }
                 else {
                     expect(AppSetup.sharedState.isSimulator) == false
                 }

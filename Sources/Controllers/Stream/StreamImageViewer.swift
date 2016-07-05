@@ -60,7 +60,7 @@ extension StreamImageViewer: JTSImageViewControllerOptionsDelegate {
 extension StreamImageViewer: JTSImageViewControllerDismissalDelegate {
     public func imageViewerDidDismiss(imageViewer: JTSImageViewController) {
         if let prevSize = prevWindowSize where prevSize != UIWindow.windowSize() {
-            postNotification(Application.Notifications.ViewSizeDidChange, value: UIWindow.windowSize())
+            postNotification(Application.Notifications.ViewSizeWillChange, value: UIWindow.windowSize())
         }
     }
 

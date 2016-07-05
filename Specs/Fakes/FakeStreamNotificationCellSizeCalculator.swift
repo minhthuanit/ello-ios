@@ -12,7 +12,7 @@ import Foundation
 
 public class FakeStreamNotificationCellSizeCalculator: StreamNotificationCellSizeCalculator {
 
-    override public func processCells(cellItems:[StreamCellItem], withWidth: CGFloat, completion:StreamTextCellSizeCalculated) {
+    override public func processCells(cellItems:[StreamCellItem], withWidth: CGFloat, columnCount: Int, completion:StreamTextCellSizeCalculated) {
         self.completion = completion
         self.cellItems = cellItems
         for item in cellItems {

@@ -53,11 +53,18 @@ public class StreamImageCell: StreamRegionableCell {
             largeImagePlayButton?.hidden = !newValue
         }
     }
-    private let defaultAspectRatio: CGFloat = 4.0/3.0
-    private var aspectRatio: CGFloat = 4.0/3.0
 
-    var calculatedHeight: CGFloat {
-        return self.frame.width / self.aspectRatio
+    private var imageSize: CGSize?
+    private var aspectRatio: CGFloat? {
+        guard let imageSize = imageSize else { return nil }
+        return imageSize.width / imageSize.height
+    }
+
+    var calculatedHeight: CGFloat? {
+        guard let aspectRatio = aspectRatio else {
+            return nil
+        }
+        return frame.width / aspectRatio
     }
 
     override public func awakeFromNib() {
@@ -101,6 +108,19 @@ public class StreamImageCell: StreamRegionableCell {
         imageView.backgroundColor = UIColor.whiteColor()
     }
 
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+
+        guard let aspectRatio = aspectRatio, imageSize = imageSize else { return }
+
+        let viewRatio = self.imageView.frame.width / self.imageView.frame.height
+        if viewRatio != aspectRatio {
+            let width = min(imageSize.width, self.frame.width)
+            let actualHeight: CGFloat = ceil(width / aspectRatio) + Size.bottomMargin
+            self.onHeightMismatch?(actualHeight)
+        }
+    }
+
     private func loadImage(url: NSURL) {
         self.imageView.pin_setImageFromURL(url) { result in
             let success = result.image != nil || result.animatedImage != nil
@@ -108,16 +128,10 @@ public class StreamImageCell: StreamRegionableCell {
             if success {
                 self.layoutIfNeeded()
                 let imageSize = isAnimated ? result.animatedImage.size : result.image.size
-                self.aspectRatio = imageSize.width / imageSize.height
-                let viewRatio = self.imageView.frame.width / self.imageView.frame.height
+                self.imageSize = imageSize
 
                 if self.serverProvidedAspectRatio == nil {
                     postNotification(StreamNotification.AnimateCellHeightNotification, value: self)
-                }
-                else if viewRatio != self.aspectRatio {
-                    let width = min(imageSize.width, self.frame.width)
-                    let actualHeight = width / self.aspectRatio + Size.bottomMargin
-                    self.onHeightMismatch?(actualHeight)
                 }
 
                 if result.resultType != .MemoryCache {
@@ -146,7 +160,7 @@ public class StreamImageCell: StreamRegionableCell {
         failImage.hidden = false
         failBackgroundView.hidden = false
         circle.stopPulse()
-        aspectRatio = self.defaultAspectRatio
+        imageSize = nil
         largeImagePlayButton?.hidden = true
         nextTick { postNotification(StreamNotification.AnimateCellHeightNotification, value: self) }
         UIView.animateWithDuration(0.15) {

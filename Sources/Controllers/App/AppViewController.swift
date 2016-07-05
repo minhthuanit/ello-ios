@@ -66,7 +66,7 @@ public class AppViewController: BaseElloViewController {
 
     public override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
-        postNotification(Application.Notifications.ViewSizeDidChange, value: size)
+        postNotification(Application.Notifications.ViewSizeWillChange, value: size)
     }
 
     public class func instantiateFromStoryboard() -> AppViewController {

@@ -24,7 +24,7 @@ public class ProfileHeaderCellSizeCalculator: NSObject {
         label.lineBreakMode = .ByWordWrapping
     }
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: ElloEmptyCompletion) {
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
         self.cellItems = cellItems
         self.completion = completion
         self.maxWidth = width

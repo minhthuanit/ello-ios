@@ -171,6 +171,12 @@ public class StreamViewController: BaseElloViewController {
             self.pullToRefreshView?.defaultContentInset = contentInset
         }
     }
+    public var columnCount: Int {
+        guard let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout else {
+            return 1
+        }
+        return layout.columnCount
+    }
 
     var pullToRefreshEnabled: Bool = true {
         didSet { pullToRefreshView?.hidden = !pullToRefreshEnabled }
@@ -242,8 +248,10 @@ public class StreamViewController: BaseElloViewController {
     }
 
     public func imageCellHeightUpdated(cell: StreamImageCell) {
-        if let indexPath = collectionView.indexPathForCell(cell) {
-            updateCellHeight(indexPath, height: cell.calculatedHeight)
+        if let indexPath = collectionView.indexPathForCell(cell),
+            calculatedHeight = cell.calculatedHeight
+        {
+            updateCellHeight(indexPath, height: calculatedHeight)
         }
     }
 
@@ -432,7 +440,11 @@ public class StreamViewController: BaseElloViewController {
         rotationNotification = NotificationObserver(notification: Application.Notifications.DidChangeStatusBarOrientation) { [unowned self] _ in
             self.collectionView.reloadData()
         }
-        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeDidChange) { [unowned self] _ in
+        sizeChangedNotification = NotificationObserver(notification: Application.Notifications.ViewSizeWillChange) { [unowned self] size in
+            if let layout = self.collectionView.collectionViewLayout as? StreamCollectionViewLayout {
+                layout.columnCount = self.streamKind.columnCountFor(width: size.width)
+                layout.invalidateLayout()
+            }
             self.collectionView.reloadData()
         }
 
@@ -517,7 +529,7 @@ public class StreamViewController: BaseElloViewController {
     }
 
     private func updateCellHeight(indexPath: NSIndexPath, height: CGFloat) {
-        let existingHeight = dataSource.heightForIndexPath(indexPath, numberOfColumns: streamKind.columnCount)
+        let existingHeight = dataSource.heightForIndexPath(indexPath, numberOfColumns: columnCount)
         if height != existingHeight {
             collectionView.performBatchUpdates({
                 self.dataSource.updateHeightForIndexPath(indexPath, height: height)
@@ -540,7 +552,7 @@ public class StreamViewController: BaseElloViewController {
     // this gets reset whenever the streamKind changes
     private func setupCollectionViewLayout() {
         if let layout = collectionView.collectionViewLayout as? StreamCollectionViewLayout {
-            layout.columnCount = streamKind.columnCount
+            layout.columnCount = streamKind.columnCountFor(width: view.frame.width)
             layout.sectionInset = UIEdgeInsetsZero
             layout.minimumColumnSpacing = streamKind.columnSpacing
             layout.minimumInteritemSpacing = 0
@@ -717,7 +729,9 @@ extension StreamViewController: StreamCollectionViewLayoutDelegate {
     public func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSize(width: UIWindow.windowWidth(), height: dataSource.heightForIndexPath(indexPath, numberOfColumns: 1))
+            let width = calculateColumnWidth(screenWidth: UIWindow.windowWidth(), columnCount: columnCount)
+            let height = dataSource.heightForIndexPath(indexPath, numberOfColumns: 1)
+            return CGSize(width: width, height: height)
     }
 
     public func collectionView(collectionView: UICollectionView,

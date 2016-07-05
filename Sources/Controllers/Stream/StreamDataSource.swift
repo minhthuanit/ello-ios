@@ -226,12 +226,22 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     public func heightForIndexPath(indexPath: NSIndexPath, numberOfColumns: NSInteger) -> CGFloat {
         if !isValidIndexPath(indexPath) { return 0 }
 
-        // alway try to return a calculated value before the default
+        // always try to return a calculated value before the default
         if numberOfColumns == 1 {
-            return visibleCellItems[indexPath.item].calculatedOneColumnCellHeight ?? visibleCellItems[indexPath.item].type.oneColumnHeight ?? 0.0
+            if let height = visibleCellItems[indexPath.item].calculatedOneColumnCellHeight {
+                return height
+            }
+            else {
+                return visibleCellItems[indexPath.item].type.oneColumnHeight
+            }
         }
         else {
-            return visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight ?? visibleCellItems[indexPath.item].type.multiColumnHeight
+            if let height = visibleCellItems[indexPath.item].calculatedMultiColumnCellHeight {
+                return height
+            }
+            else {
+                return visibleCellItems[indexPath.item].type.multiColumnHeight
+            }
         }
     }
 
@@ -698,17 +708,17 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         }
         let afterAll = after(4, block: completion)
 
-        self.imageSizeCalculator.processCells(imageCells.normal, withWidth: withWidth) {
-            self.imageSizeCalculator.processCells(imageCells.repost, withWidth: withWidth - 30.0, completion: afterAll)
+        self.imageSizeCalculator.processCells(imageCells.normal, withWidth: withWidth, columnCount: streamKind.columnCount) {
+            self.imageSizeCalculator.processCells(imageCells.repost, withWidth: withWidth - 30.0, columnCount: self.streamKind.columnCount, completion: afterAll)
         }
         // -30.0 acounts for the 15 on either side for constraints
         let textLeftRightConstraintWidth = (StreamTextCellPresenter.postMargin * 2)
-        self.textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth) {
+        self.textSizeCalculator.processCells(textCells.normal, withWidth: withWidth - textLeftRightConstraintWidth, columnCount: streamKind.columnCount) {
             // extra -30.0 acounts for the left indent on a repost with the black line
-            self.textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - (textLeftRightConstraintWidth * 2), completion: afterAll)
+            self.textSizeCalculator.processCells(textCells.repost, withWidth: withWidth - (textLeftRightConstraintWidth * 2), columnCount: self.streamKind.columnCount, completion: afterAll)
         }
-        self.notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, completion: afterAll)
-        self.profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, completion: afterAll)
+        self.notificationSizeCalculator.processCells(notificationElements, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
+        self.profileHeaderSizeCalculator.processCells(profileHeaderItems, withWidth: withWidth, columnCount: streamKind.columnCount, completion: afterAll)
     }
 
     private func filterTextCells(cellItems: [StreamCellItem]) -> (normal: [StreamCellItem], repost: [StreamCellItem]) {

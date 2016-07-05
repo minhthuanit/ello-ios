@@ -12,6 +12,7 @@ public class StreamImageCellSizeCalculator: NSObject {
 
     var screenWidth: CGFloat = 0.0
     var maxWidth: CGFloat = 0.0
+    var columnCount: Int = 1
     public var cellItems: [StreamCellItem] = []
     public var completion: ElloEmptyCompletion = {}
 
@@ -38,10 +39,11 @@ public class StreamImageCellSizeCalculator: NSObject {
 
 // MARK: Public
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: ElloEmptyCompletion) {
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
         self.completion = completion
         self.cellItems = cellItems
         self.screenWidth = width
+        self.columnCount = columnCount
         loadNext()
     }
 
@@ -71,7 +73,7 @@ public class StreamImageCellSizeCalculator: NSObject {
                     ratio = 16.0/9.0
                 }
                 item.calculatedOneColumnCellHeight = StreamImageCell.Size.bottomMargin + maxWidth / ratio
-                item.calculatedMultiColumnCellHeight = StreamImageCell.Size.bottomMargin + ((maxWidth - 10.0) / 2) / ratio
+                item.calculatedMultiColumnCellHeight = StreamImageCell.Size.bottomMargin + calculateColumnWidth(screenWidth: maxWidth, columnCount: columnCount) / ratio
             }
             loadNext()
         }
@@ -89,10 +91,11 @@ public class StreamImageCellSizeCalculator: NSObject {
     }
 
     private func multiColumnImageHeight(imageBlock: ImageRegion) -> CGFloat {
-        var imageWidth = (maxWidth - 10.0) / 2
+        var imageWidth = calculateColumnWidth(screenWidth: maxWidth, columnCount: columnCount)
         if let assetWidth = imageBlock.asset?.gridLayoutAttachment?.width {
             imageWidth = min(imageWidth, CGFloat(assetWidth))
         }
-        return  (imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock)) + 10
+        return ceil((imageWidth / StreamImageCellSizeCalculator.aspectRatioForImageRegion(imageBlock)) + 10)
     }
+
 }

@@ -63,7 +63,7 @@ public final class Asset: JSONAble {
     }
 
     public var gridLayoutAttachment: Attachment? {
-        let isWide = Window.isWide
+        let isWide = Window.isWide(Window.width)
         if isWide {
             return self.hdpi
         }

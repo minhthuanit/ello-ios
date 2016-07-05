@@ -46,3 +46,7 @@ public func pixelAwareFloor(value: Double) -> Double {
     let scale = Double(UIScreen.mainScreen().scale)
     return floor(value*scale)/scale
 }
+
+public func calculateColumnWidth(screenWidth screenWidth: CGFloat, columnCount: Int) -> CGFloat {
+    return (screenWidth - 10 * CGFloat(columnCount - 1)) / CGFloat(columnCount)
+}

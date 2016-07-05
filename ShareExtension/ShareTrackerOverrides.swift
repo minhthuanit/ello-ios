@@ -31,5 +31,6 @@ public class Tracker {
 }
 
 public class Window {
-    static let isWide = false
+    static public func isWide(width: Float) -> Bool { return false }
+    static public var width: Float { return 0 }
 }

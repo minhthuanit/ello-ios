@@ -36,7 +36,7 @@ public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
         }
     }
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, completion: StreamTextCellSizeCalculated) {
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: StreamTextCellSizeCalculated) {
         self.completion = completion
         self.cellItems = cellItems
         self.originalWidth = width
