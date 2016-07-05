@@ -5,12 +5,13 @@
 import Foundation
 
 public class StreamImageCellSizeCalculator: NSObject {
-
-    var screenWidth: CGFloat = 0.0
-    var maxWidth: CGFloat = 0.0
-    var columnCount: Int = 1
-    public var cellItems: [StreamCellItem] = []
-    public var completion: ElloEmptyCompletion = {}
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    private var cellJobs: [CellJob] = []
+    private var screenWidth: CGFloat = 0.0
+    private var maxWidth: CGFloat = 0.0
+    private var columnCount: Int = 1
+    private var cellItems: [StreamCellItem] = []
+    private var completion: ElloEmptyCompletion = {}
 
 // MARK: Static
 
@@ -36,14 +37,28 @@ public class StreamImageCellSizeCalculator: NSObject {
 // MARK: Public
 
     public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
-        self.completion = completion
-        self.cellItems = cellItems
-        self.screenWidth = width
-        self.columnCount = columnCount
-        loadNext()
+        let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
+        cellJobs.append(job)
+        if cellJobs.count == 1 {
+            processJob(job)
+        }
     }
 
 // MARK: Private
+
+    private func processJob(job: CellJob) {
+        self.completion = {
+            self.cellJobs.removeAtIndex(0)
+            job.completion()
+            if let nextJob = self.cellJobs.safeValue(0) {
+                self.processJob(nextJob)
+            }
+        }
+        self.cellItems = job.cellItems
+        self.screenWidth = job.width
+        self.columnCount = job.columnCount
+        loadNext()
+    }
 
     private func loadNext() {
         self.maxWidth = screenWidth

@@ -5,12 +5,12 @@
 import Foundation
 
 public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
-    public typealias StreamTextCellSizeCalculated = () -> Void
-
     let webView: UIWebView
-    var maxWidth: CGFloat
-    public var cellItems: [StreamCellItem] = []
-    public var completion: StreamTextCellSizeCalculated = {}
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    private var cellJobs: [CellJob] = []
+    private var cellItems: [StreamCellItem] = []
+    private var maxWidth: CGFloat
+    private var completion: ElloEmptyCompletion = {}
 
     public static let srcRegex: NSRegularExpression  = try! NSRegularExpression(
         pattern: "src=[\"']([^\"']*)[\"']",
@@ -23,10 +23,28 @@ public class StreamTextCellSizeCalculator: NSObject, UIWebViewDelegate {
         self.webView.delegate = self
     }
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: StreamTextCellSizeCalculated) {
-        self.completion = completion
-        self.cellItems = cellItems
-        self.maxWidth = width
+// MARK: Public
+
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
+        let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
+        cellJobs.append(job)
+        if cellJobs.count == 1 {
+            processJob(job)
+        }
+    }
+
+// MARK: Private
+
+    private func processJob(job: CellJob) {
+        self.completion = {
+            self.cellJobs.removeAtIndex(0)
+            job.completion()
+            if let nextJob = self.cellJobs.safeValue(0) {
+                self.processJob(nextJob)
+            }
+        }
+        self.cellItems = job.cellItems
+        self.maxWidth = job.width
         loadNext()
     }
 

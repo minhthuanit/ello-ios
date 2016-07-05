@@ -3,40 +3,50 @@
 //
 
 
-private let textViewForSizing = ElloTextView(frame: .zero, textContainer: nil)
+private let textViewForSizing = ElloTextView(frame: CGRectZero, textContainer: nil)
+private var srcRegex: NSRegularExpression? = try? NSRegularExpression(
+                pattern: "src=[\"']([^\"']*)[\"']",
+                options: .CaseInsensitive)
 
 public class StreamNotificationCellSizeCalculator: NSObject, UIWebViewDelegate {
-
-    public typealias StreamTextCellSizeCalculated = () -> Void
-
     let webView: UIWebView
     var originalWidth: CGFloat
-    public var cellItems: [StreamCellItem] = []
-    public var completion: StreamTextCellSizeCalculated = {}
 
-    var srcRegex: NSRegularExpression?
+    private typealias CellJob = (cellItems: [StreamCellItem], width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion)
+    private var cellJobs: [CellJob] = []
+    private var cellItems: [StreamCellItem] = []
+    private var completion: ElloEmptyCompletion = {}
 
     public init(webView: UIWebView) {
         self.webView = webView
         originalWidth = self.webView.frame.size.width
         super.init()
         self.webView.delegate = self
+    }
 
-        do {
-            try srcRegex = NSRegularExpression(
-                pattern: "src=[\"']([^\"']*)[\"']",
-                options: .CaseInsensitive)
-        }
-        catch {
-            srcRegex = nil
+// MARK: Public
+
+    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: ElloEmptyCompletion) {
+        let job: CellJob = (cellItems: cellItems, width: width, columnCount: columnCount, completion: completion)
+        cellJobs.append(job)
+        if cellJobs.count == 1 {
+            processJob(job)
         }
     }
 
-    public func processCells(cellItems: [StreamCellItem], withWidth width: CGFloat, columnCount: Int, completion: StreamTextCellSizeCalculated) {
-        self.completion = completion
-        self.cellItems = cellItems
-        self.originalWidth = width
-        self.webView.frame = self.webView.frame.withWidth(width)
+// MARK: Private
+
+    private func processJob(job: CellJob) {
+        self.completion = {
+            self.cellJobs.removeAtIndex(0)
+            job.completion()
+            if let nextJob = self.cellJobs.safeValue(0) {
+                self.processJob(nextJob)
+            }
+        }
+        self.cellItems = job.cellItems
+        self.originalWidth = job.width
+        self.webView.frame = self.webView.frame.withWidth(job.width)
         loadNext()
     }
 
