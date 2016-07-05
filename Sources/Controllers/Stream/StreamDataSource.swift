@@ -656,11 +656,6 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         insertUnsizedCellItems(cellItems, withWidth: withWidth, startingIndexPath: startingIndexPath, completion: completion)
     }
 
-    public func replaceItem(at indexPath: NSIndexPath, with streamCellItems: [StreamCellItem] = []) -> [NSIndexPath] {
-        removeItemAtIndexPath(indexPath)
-        return insertStreamCellItems(streamCellItems, startingIndexPath: indexPath)
-    }
-
     public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem] = []) -> [NSIndexPath] {
         guard indexPaths.count > 0 else { return []}
         removeItemAtIndexPaths(indexPaths)
