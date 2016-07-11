@@ -16,9 +16,9 @@ PODS:
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - CRToast (0.0.7)
-  - ElloOSSCerts (1.1.0):
+  - ElloCerts (1.1.0):
     - Alamofire (~> 3.0)
-  - ElloOSSUIFonts (1.0.1)
+  - ElloUIFonts (1.1.0)
   - Fabric (1.6.7)
   - FBSnapshotTestCase (2.1.0):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.0)
@@ -125,8 +125,8 @@ DEPENDENCIES:
   - Analytics/Segmentio
   - Crashlytics (~> 3.4)
   - CRToast (from `https://github.com/ello/CRToast`)
-  - ElloOSSCerts (~> 1.1)
-  - ElloOSSUIFonts (~> 1.0.1)
+  - ElloCerts (~> 1.1)
+  - ElloUIFonts (~> 1.1.0)
   - Fabric (~> 1.6)
   - FBSnapshotTestCase
   - FLAnimatedImage (~> 1.0)
@@ -218,8 +218,8 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   CRToast: eb22641501990233c53cb8f83f7d2ea87e0ddf73
-  ElloOSSCerts: 53cbf951c55b4d6687a5abba306ea2911d82bac4
-  ElloOSSUIFonts: 4bc41bfb20baa34ce07215ad924254e514f65458
+  ElloCerts: 13ecb93c2189b5d3bafa2b3445ccdeab4428f372
+  ElloUIFonts: 16c31ba0b19e82d613df50fb6498f43560a603a2
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FBSnapshotTestCase: 366ecd378511d7716c79991cd8067d1eed23578d
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
