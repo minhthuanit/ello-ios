@@ -491,9 +491,6 @@ extension ProfileViewController:  StreamDestination {
     public func setPrimaryJSONAble(jsonable: JSONAble) {
         guard let user = jsonable as? User else { return }
 
-        if self.user == nil {
-            Tracker.sharedTracker.profileViewed(user.atName ?? "(no name)")
-        }
         self.user = user
         updateCurrentUser(user)
 
