@@ -1150,7 +1150,7 @@ class StreamDataSourceSpec: QuickSpec {
                     }
                 }
                 it("should allow removing an item from the end") {
-                    subject.removeItemAtIndexPath(NSIndexPath(forItem: items.count - 1, inSection:0))
+                    subject.removeItemAtIndexPath(NSIndexPath(forItem: items.count - 1, inSection: 0))
                     expect(subject.visibleCellItems.count) == items.count - 1
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index]
@@ -1158,6 +1158,88 @@ class StreamDataSourceSpec: QuickSpec {
                 }
                 it("should ignore removing invalid index paths") {
                     subject.removeItemAtIndexPath(indexPathOutOfBounds)
+                    expect(subject.visibleCellItems.count) == items.count
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        expect(item) == items[index]
+                    }
+                }
+            }
+
+            describe("removeItemAtIndexPaths(_: [NSIndexPath])") {
+                let post = Post.stub([:])
+                let items = [
+                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
+                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
+                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
+                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:])))
+                ]
+                beforeEach {
+                    subject.appendUnsizedCellItems(items, withWidth: webView.frame.width) { cellCount in }
+                }
+                it("sanity check") {
+                    expect(items[0]) == items[0]
+                    expect(items[0]) != items[1]
+                    expect(items[1]) == items[1]
+                    expect(items[1]) != items[2]
+                    expect(items[2]) == items[2]
+                    expect(items[2]) != items[3]
+                    expect(items[3]) == items[3]
+                    expect(items[3]) != items[0]
+                }
+                it("should allow removing items from the beginning") {
+                    subject.removeItemAtIndexPaths([indexPath0, indexPath1])
+                    expect(subject.visibleCellItems.count) == items.count - 2
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        expect(item) == items[index + 2]
+                    }
+                }
+                it("should allow removing items from the beginning, reverse order") {
+                    subject.removeItemAtIndexPaths([indexPath1, indexPath0])
+                    expect(subject.visibleCellItems.count) == items.count - 2
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        expect(item) == items[index + 2]
+                    }
+                }
+                it("should allow removing items from the end") {
+                    subject.removeItemAtIndexPaths([NSIndexPath(forItem: items.count - 2, inSection: 0), NSIndexPath(forItem: items.count - 1, inSection: 0)])
+                    expect(subject.visibleCellItems.count) == items.count - 2
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        expect(item) == items[index]
+                    }
+                }
+                it("should allow removing items from the end, reverse order") {
+                    subject.removeItemAtIndexPaths([NSIndexPath(forItem: items.count - 1, inSection: 0), NSIndexPath(forItem: items.count - 2, inSection: 0)])
+                    expect(subject.visibleCellItems.count) == items.count - 2
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        expect(item) == items[index]
+                    }
+                }
+                it("should allow removing items from the middle") {
+                    subject.removeItemAtIndexPaths([indexPath1, NSIndexPath(forItem: 2, inSection: 0)])
+                    expect(subject.visibleCellItems.count) == items.count - 2
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        if index == 0 {
+                            expect(item) == items[index]
+                        }
+                        else {
+                            expect(item) == items[index + 2]
+                        }
+                    }
+                }
+                it("should allow removing items from the middle, reverse order") {
+                    subject.removeItemAtIndexPaths([NSIndexPath(forItem: 2, inSection: 0), indexPath1])
+                    expect(subject.visibleCellItems.count) == items.count - 2
+                    for (index, item) in subject.visibleCellItems.enumerate() {
+                        if index == 0 {
+                            expect(item) == items[index]
+                        }
+                        else {
+                            expect(item) == items[index + 2]
+                        }
+                    }
+                }
+                it("should ignore removing invalid index paths") {
+                    subject.removeItemAtIndexPaths([indexPathOutOfBounds])
                     expect(subject.visibleCellItems.count) == items.count
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index]

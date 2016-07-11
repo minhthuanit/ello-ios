@@ -231,12 +231,16 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
     }
 
     public func removeItemAtIndexPaths(indexPaths: [NSIndexPath]) {
+        var items: [StreamCellItem] = []
         for indexPath in indexPaths {
             if let itemToRemove = self.visibleCellItems.safeValue(indexPath.item) {
-                temporarilyUnfilter() {
-                    if let index = self.streamCellItems.indexOf(itemToRemove) {
-                        self.streamCellItems.removeAtIndex(index)
-                    }
+                items.append(itemToRemove)
+            }
+        }
+        temporarilyUnfilter() {
+            for itemToRemove in items {
+                if let index = self.streamCellItems.indexOf(itemToRemove) {
+                    self.streamCellItems.removeAtIndex(index)
                 }
             }
         }
