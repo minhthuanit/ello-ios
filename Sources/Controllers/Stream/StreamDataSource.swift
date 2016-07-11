@@ -220,17 +220,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
         return indexPaths
     }
 
-    public func removeItemAtIndexPath(indexPath: NSIndexPath) {
-        if let itemToRemove = self.visibleCellItems.safeValue(indexPath.item) {
-            temporarilyUnfilter() {
-                if let index = self.streamCellItems.indexOf(itemToRemove) {
-                    self.streamCellItems.removeAtIndex(index)
-                }
-            }
-        }
-    }
-
-    public func removeItemAtIndexPaths(indexPaths: [NSIndexPath]) {
+    public func removeItemsAtIndexPaths(indexPaths: [NSIndexPath]) {
         var items: [StreamCellItem] = []
         for indexPath in indexPaths {
             if let itemToRemove = self.visibleCellItems.safeValue(indexPath.item) {
@@ -418,7 +408,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 insertUnsizedCellItems(items, withWidth: UIWindow.windowWidth(), startingIndexPath: firstIndexPath) { newIndexPaths in
                     for wrongIndexPath in Array(oldIndexPaths.reverse()) {
                         let indexPath = NSIndexPath(forItem: wrongIndexPath.item + newIndexPaths.count, inSection: wrongIndexPath.section)
-                        self.removeItemAtIndexPath(indexPath)
+                        self.removeItemsAtIndexPaths([indexPath])
                     }
                     collectionView.performBatchUpdates({
                         collectionView.insertItemsAtIndexPaths(newIndexPaths)
@@ -439,7 +429,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
                 insertUnsizedCellItems(items, withWidth: UIWindow.windowWidth(), startingIndexPath: firstIndexPath) { newIndexPaths in
                     for wrongIndexPath in Array(oldIndexPaths.reverse()) {
                         let indexPath = NSIndexPath(forItem: wrongIndexPath.item + newIndexPaths.count, inSection: wrongIndexPath.section)
-                        self.removeItemAtIndexPath(indexPath)
+                        self.removeItemsAtIndexPaths([indexPath])
                     }
                     collectionView.performBatchUpdates({
                         collectionView.insertItemsAtIndexPaths(newIndexPaths)
@@ -662,7 +652,7 @@ public class StreamDataSource: NSObject, UICollectionViewDataSource {
 
     public func replaceItems(at indexPaths: [NSIndexPath], with streamCellItems: [StreamCellItem]) -> [NSIndexPath] {
         guard indexPaths.count > 0 else { return []}
-        removeItemAtIndexPaths(indexPaths)
+        removeItemsAtIndexPaths(indexPaths)
         return insertStreamCellItems(streamCellItems, startingIndexPath: indexPaths[0])
     }
 

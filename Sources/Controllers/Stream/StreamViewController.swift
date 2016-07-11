@@ -1156,7 +1156,7 @@ extension StreamViewController: UIScrollViewDelegate {
         if let indexPath = self.collectionView.lastIndexPathForSection(0)
             where dataSource.visibleCellItems[indexPath.row].type == .StreamLoading
         {
-            dataSource.removeItemAtIndexPath(indexPath)
+            dataSource.removeItemsAtIndexPaths([indexPath])
             collectionView.reloadData()
         }
     }

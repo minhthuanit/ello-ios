@@ -1131,41 +1131,7 @@ class StreamDataSourceSpec: QuickSpec {
                 }
             }
 
-            describe("removeItemAtIndexPath(_: NSIndexPath)") {
-                let post = Post.stub([:])
-                let items = [
-                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
-                    StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:])))
-                ]
-                beforeEach {
-                    subject.appendUnsizedCellItems(items, withWidth: webView.frame.width) { cellCount in }
-                }
-                it("should allow removing an item from the beginning") {
-                    subject.removeItemAtIndexPath(indexPath0)
-                    expect(subject.visibleCellItems.count) == items.count - 1
-                    for (index, item) in subject.visibleCellItems.enumerate() {
-                        expect(item) == items[index + 1]
-                    }
-                }
-                it("should allow removing an item from the end") {
-                    subject.removeItemAtIndexPath(NSIndexPath(forItem: items.count - 1, inSection: 0))
-                    expect(subject.visibleCellItems.count) == items.count - 1
-                    for (index, item) in subject.visibleCellItems.enumerate() {
-                        expect(item) == items[index]
-                    }
-                }
-                it("should ignore removing invalid index paths") {
-                    subject.removeItemAtIndexPath(indexPathOutOfBounds)
-                    expect(subject.visibleCellItems.count) == items.count
-                    for (index, item) in subject.visibleCellItems.enumerate() {
-                        expect(item) == items[index]
-                    }
-                }
-            }
-
-            describe("removeItemAtIndexPaths(_: [NSIndexPath])") {
+            describe("removeItemsAtIndexPaths(_: [NSIndexPath])") {
                 let post = Post.stub([:])
                 let items = [
                     StreamCellItem(jsonable: post, type: .Text(data: TextRegion.stub([:]))),
@@ -1187,35 +1153,35 @@ class StreamDataSourceSpec: QuickSpec {
                     expect(items[3]) != items[0]
                 }
                 it("should allow removing items from the beginning") {
-                    subject.removeItemAtIndexPaths([indexPath0, indexPath1])
+                    subject.removeItemsAtIndexPaths([indexPath0, indexPath1])
                     expect(subject.visibleCellItems.count) == items.count - 2
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index + 2]
                     }
                 }
                 it("should allow removing items from the beginning, reverse order") {
-                    subject.removeItemAtIndexPaths([indexPath1, indexPath0])
+                    subject.removeItemsAtIndexPaths([indexPath1, indexPath0])
                     expect(subject.visibleCellItems.count) == items.count - 2
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index + 2]
                     }
                 }
                 it("should allow removing items from the end") {
-                    subject.removeItemAtIndexPaths([NSIndexPath(forItem: items.count - 2, inSection: 0), NSIndexPath(forItem: items.count - 1, inSection: 0)])
+                    subject.removeItemsAtIndexPaths([NSIndexPath(forItem: items.count - 2, inSection: 0), NSIndexPath(forItem: items.count - 1, inSection: 0)])
                     expect(subject.visibleCellItems.count) == items.count - 2
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index]
                     }
                 }
                 it("should allow removing items from the end, reverse order") {
-                    subject.removeItemAtIndexPaths([NSIndexPath(forItem: items.count - 1, inSection: 0), NSIndexPath(forItem: items.count - 2, inSection: 0)])
+                    subject.removeItemsAtIndexPaths([NSIndexPath(forItem: items.count - 1, inSection: 0), NSIndexPath(forItem: items.count - 2, inSection: 0)])
                     expect(subject.visibleCellItems.count) == items.count - 2
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index]
                     }
                 }
                 it("should allow removing items from the middle") {
-                    subject.removeItemAtIndexPaths([indexPath1, NSIndexPath(forItem: 2, inSection: 0)])
+                    subject.removeItemsAtIndexPaths([indexPath1, NSIndexPath(forItem: 2, inSection: 0)])
                     expect(subject.visibleCellItems.count) == items.count - 2
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         if index == 0 {
@@ -1227,7 +1193,7 @@ class StreamDataSourceSpec: QuickSpec {
                     }
                 }
                 it("should allow removing items from the middle, reverse order") {
-                    subject.removeItemAtIndexPaths([NSIndexPath(forItem: 2, inSection: 0), indexPath1])
+                    subject.removeItemsAtIndexPaths([NSIndexPath(forItem: 2, inSection: 0), indexPath1])
                     expect(subject.visibleCellItems.count) == items.count - 2
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         if index == 0 {
@@ -1239,7 +1205,7 @@ class StreamDataSourceSpec: QuickSpec {
                     }
                 }
                 it("should ignore removing invalid index paths") {
-                    subject.removeItemAtIndexPaths([indexPathOutOfBounds])
+                    subject.removeItemsAtIndexPaths([indexPathOutOfBounds])
                     expect(subject.visibleCellItems.count) == items.count
                     for (index, item) in subject.visibleCellItems.enumerate() {
                         expect(item) == items[index]
