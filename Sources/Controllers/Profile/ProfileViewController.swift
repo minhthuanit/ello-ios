@@ -511,7 +511,7 @@ extension ProfileViewController:  StreamDestination {
             }
         }
 
-
+        assignRightButtons()
         Tracker.sharedTracker.profileLoaded(user.atName ?? "(no name)")
 
     }
