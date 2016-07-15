@@ -403,7 +403,7 @@ public final class StreamViewController: BaseElloViewController {
 // MARK: Private Functions
 
     private func initialLoadFailure() {
-        guard streamViewDelegate?.streamViewCustomLoadFailed() != true else {
+        guard streamViewDelegate?.streamViewCustomLoadFailed() == false else {
             return
         }
         self.doneLoading()
@@ -651,7 +651,6 @@ extension StreamViewController: ColumnToggleDelegate {
             // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
             // triggering pagination at this time will, inexplicably, cause the cells to disappear
             canLoadNext = false
-//            dataSource.removeAllCellItems()
             setupCollectionViewLayout()
 
             toggleClosure(isGridView)
