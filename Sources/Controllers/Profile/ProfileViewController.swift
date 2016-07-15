@@ -375,51 +375,51 @@ public final class ProfileViewController: StreamableViewController {
 // MARK: Check for cached coverImage and avatar (only for currentUser)
 extension ProfileViewController {
     public func cachedImage(key: CacheKey) -> UIImage? {
-        if user?.id == currentUser?.id {
-            return TemporaryCache.load(key)
+        guard user?.id == currentUser?.id else {
+            return nil
         }
-        return nil
+        return TemporaryCache.load(key)
     }
 
     public func updateCachedImages() {
-        if let cachedImage = cachedImage(.CoverImage) {
-            // this seemingly unecessary nil check is an attempt
-            // to guard against crash #6:
-            // https://www.crashlytics.com/ello/ios/apps/co.ello.ello/issues/55725749f505b5ccf00cf76d/sessions/55725654012a0001029d613137326264
-            if coverImage != nil {
-                coverImage.image = cachedImage
-                coverImage.alpha = 1.0
-            }
+        guard let cachedImage = cachedImage(.CoverImage) where coverImage != nil else {
+            return
         }
+
+        // this seemingly unecessary nil check is an attempt
+        // to guard against crash #6:
+        // https://www.crashlytics.com/ello/ios/apps/co.ello.ello/issues/55725749f505b5ccf00cf76d/sessions/55725654012a0001029d613137326264
+        coverImage.image = cachedImage
+        coverImage.alpha = 1.0
     }
 
     public func updateCurrentUser(user: User) {
-        if user.id == self.currentUser?.id {
-            // only update the avatar and coverImage assets if there is nothing
-            // in the cache.  If images are in the cache, that implies that the
-            // image could still be unprocessed, so don't set the avatar or
-            // coverImage to the old, stale value.
-            if cachedImage(.Avatar) == nil {
-                self.currentUser?.avatar = user.avatar
-            }
-
-            if cachedImage(.CoverImage) == nil {
-                self.currentUser?.coverImage = user.coverImage
-            }
-
-            elloNavigationItem.rightBarButtonItem = nil
-
-            mentionButton.hidden = true
-            relationshipControl.hidden = true
-            editButton.hidden = false
-            inviteButton.hidden = false
-        }
-        else {
+        guard user.id == self.currentUser?.id else {
             mentionButton.hidden = false
             relationshipControl.hidden = false
             editButton.hidden = true
             inviteButton.hidden = true
+            return
         }
+
+        // only update the avatar and coverImage assets if there is nothing
+        // in the cache.  If images are in the cache, that implies that the
+        // image could still be unprocessed, so don't set the avatar or
+        // coverImage to the old, stale value.
+        if cachedImage(.Avatar) == nil {
+            self.currentUser?.avatar = user.avatar
+        }
+
+        if cachedImage(.CoverImage) == nil {
+            self.currentUser?.coverImage = user.coverImage
+        }
+
+        elloNavigationItem.rightBarButtonItem = nil
+
+        mentionButton.hidden = true
+        relationshipControl.hidden = true
+        editButton.hidden = false
+        inviteButton.hidden = false
     }
 
     public func updateRelationshipPriority(relationshipPriority: RelationshipPriority) {
@@ -432,19 +432,17 @@ extension ProfileViewController {
 extension ProfileViewController: PostsTappedResponder {
     public func onPostsTapped() {
         let indexPath = NSIndexPath(forItem: 1, inSection: 0)
-        if streamViewController.dataSource.isValidIndexPath(indexPath) {
-            streamViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
-        }
+        guard streamViewController.dataSource.isValidIndexPath(indexPath) else { return }
+        streamViewController.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: UICollectionViewScrollPosition.Top, animated: true)
     }
 }
 
 // MARK: ProfileViewController: EditProfileResponder
 extension ProfileViewController: EditProfileResponder {
     public func onEditProfile() {
-        if let settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController() as? SettingsContainerViewController {
-            settings.currentUser = currentUser
-            navigationController?.pushViewController(settings, animated: true)
-        }
+        guard let settings = UIStoryboard(name: "Settings", bundle: .None).instantiateInitialViewController() as? SettingsContainerViewController else { return }
+        settings.currentUser = currentUser
+        navigationController?.pushViewController(settings, animated: true)
     }
 }
 

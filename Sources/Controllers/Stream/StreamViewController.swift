@@ -651,7 +651,7 @@ extension StreamViewController: ColumnToggleDelegate {
             // setting 'canLoadNext' to false will prevent pagination from triggering when this profile has no posts
             // triggering pagination at this time will, inexplicably, cause the cells to disappear
             canLoadNext = false
-            dataSource.removeAllCellItems()
+//            dataSource.removeAllCellItems()
             setupCollectionViewLayout()
 
             toggleClosure(isGridView)
