@@ -1,7 +1,7 @@
 ////
 ///  PostDetailViewController.swift
 //
-
+public final class PostDetailViewController: StreamableViewController {
     var post: Post?
     var postParam: String!
     var scrollToComment: ElloComment?
@@ -219,10 +219,6 @@ extension PostDetailViewController: StreamDestination {
 
     public func setPrimaryJSONAble(jsonable: JSONAble) {
         guard let post = jsonable as? Post else { return }
-
-        if self.post == nil {
-            Tracker.sharedTracker.postViewed(post.id)
-        }
 
         self.post = post
 

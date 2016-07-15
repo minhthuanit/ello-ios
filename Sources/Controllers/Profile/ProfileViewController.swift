@@ -328,26 +328,21 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     func sharePostTapped(sourceView: UIView) {
-        if let user = user,
+        guard let user = user,
             shareLink = user.shareLink,
             shareURL = NSURL(string: shareLink)
-        {
-            Tracker.sharedTracker.userShared(user)
-            let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
-            if UI_USER_INTERFACE_IDIOM() == .Phone {
-                activityVC.modalPresentationStyle = .FullScreen
-                logPresentingAlert(readableClassName() ?? "ProfileViewController")
-                presentViewController(activityVC, animated: true) { }
-            }
-            else {
-                activityVC.modalPresentationStyle = .Popover
-                activityVC.popoverPresentationController?.sourceView = sourceView
-                logPresentingAlert(readableClassName() ?? "ProfileViewController")
-                presentViewController(activityVC, animated: true) { }
-            }
+        else { return }
+
+        Tracker.sharedTracker.userShared(user)
+        let activityVC = UIActivityViewController(activityItems: [shareURL], applicationActivities: [SafariActivity()])
+        if UI_USER_INTERFACE_IDIOM() == .Phone {
+            activityVC.modalPresentationStyle = .FullScreen
+            logPresentingAlert(readableClassName() ?? "ProfileViewController")
+            presentViewController(activityVC, animated: true) { }
         }
         else {
             activityVC.modalPresentationStyle = .Popover
+            activityVC.popoverPresentationController?.sourceView = sourceView
             logPresentingAlert(readableClassName() ?? "ProfileViewController")
             presentViewController(activityVC, animated: true) { }
         }
