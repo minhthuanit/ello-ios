@@ -6,11 +6,15 @@ public final class ProfileGenerator: StreamGenerator {
 
     public var currentUser: User?
     public var streamKind: StreamKind
+    // This is temporary until we move everything over to generators
+    // we need the streamVC for initial load tokens
+    public var streamViewController: StreamViewController
     weak public var destination: StreamDestination?
 
     private var user: User?
     private let userParam: String
     private var posts: [Post]?
+    private var localToken: String!
 
     func headerItems() -> [StreamCellItem] {
         guard let user = user else { return [] }
@@ -27,16 +31,20 @@ public final class ProfileGenerator: StreamGenerator {
          userParam: String,
          user: User?,
          streamKind: StreamKind,
+         streamViewController: StreamViewController,
          destination: StreamDestination?
         ) {
         self.currentUser = currentUser
         self.user = user
         self.userParam = userParam
         self.streamKind = streamKind
+        self.streamViewController = streamViewController
+        self.localToken = streamViewController.resetInitialPageLoadingToken()
         self.destination = destination
     }
 
     public func bind() {
+        localToken = streamViewController.resetInitialPageLoadingToken()
         setPlaceHolders()
         setInitialUser()
         loadUser()
@@ -73,6 +81,7 @@ private extension ProfileGenerator {
             streamKind: streamKind,
             success: { [weak self] (user, responseConfig) in
                 guard let sself = self else { return }
+                guard sself.streamViewController.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.user = user
                 sself.destination?.setPagingConfig(responseConfig)
                 sself.destination?.setPrimaryJSONAble(user)
@@ -85,10 +94,12 @@ private extension ProfileGenerator {
     }
 
     func loadUserPosts() {
+        guard streamViewController.isValidInitialPageLoadingToken(localToken) else { return }
         StreamService().loadUserPosts(
             userParam,
             success: { [weak self] (posts, responseConfig) in
                 guard let sself = self else { return }
+                guard sself.streamViewController.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.posts = posts
                 let userPostItems = sself.parse(posts)
                 sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)

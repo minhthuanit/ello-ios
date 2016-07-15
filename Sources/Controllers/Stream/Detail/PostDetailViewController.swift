@@ -37,6 +37,7 @@ public final class PostDetailViewController: StreamableViewController {
             postParam: postParam,
             post: self.post,
             streamKind: self.streamViewController.streamKind,
+            streamViewController: self.streamViewController,
             destination: self
         )
         ElloHUD.showLoadingHudInView(streamViewController.view)

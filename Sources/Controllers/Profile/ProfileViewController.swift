@@ -110,6 +110,7 @@ public final class ProfileViewController: StreamableViewController {
             userParam: userParam,
             user: self.user,
             streamKind: self.streamViewController.streamKind,
+            streamViewController: self.streamViewController,
             destination: self
         )
         view.clipsToBounds = true
