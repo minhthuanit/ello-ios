@@ -1,6 +1,10 @@
+////
+///  ProfileGenerator.swift
+//
+
 public final class ProfileGenerator: StreamGenerator {
 
-    public let currentUser: User?
+    public var currentUser: User?
     public var streamKind: StreamKind
     weak public var destination: StreamDestination?
 

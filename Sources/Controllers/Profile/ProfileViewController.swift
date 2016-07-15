@@ -22,7 +22,7 @@ public final class ProfileViewController: StreamableViewController {
     var postChangedNotification: NotificationObserver?
     var relationshipChangedNotification: NotificationObserver?
     var deeplinkPath: String?
-    var generator: ProfileGenerator!
+    var generator: ProfileGenerator?
     private var isSetup = false
 
     @IBOutlet weak var navigationBar: ElloNavigationBar!
@@ -142,6 +142,11 @@ public final class ProfileViewController: StreamableViewController {
         gradientLayer.frame.size = gradientView.frame.size
     }
 
+    override public func didSetCurrentUser() {
+        generator?.currentUser = currentUser
+        super.didSetCurrentUser()
+    }
+
     override func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         positionNavBar(navigationBar, visible: true, withConstraint: navigationBarTopConstraint)
@@ -209,7 +214,7 @@ public final class ProfileViewController: StreamableViewController {
     private func reloadEntireProfile() {
 //        let localToken = streamViewController.resetInitialPageLoadingToken()
         coverImage.alpha = 0
-        generator.bind()
+        generator?.bind()
     }
 
     private func showUserLoadFailure() {
@@ -349,7 +354,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     func toggleGrid(isGridView: Bool) {
-        generator.toggleGrid()
+        generator?.toggleGrid()
     }
 
 

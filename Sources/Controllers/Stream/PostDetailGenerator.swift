@@ -1,6 +1,10 @@
+////
+///  PostDetailGenerator.swift
+//
+
 public final class PostDetailGenerator: StreamGenerator {
 
-    public let currentUser: User?
+    public var currentUser: User?
     public var streamKind: StreamKind
     // TODO: make destination weak
     weak public var destination: StreamDestination?

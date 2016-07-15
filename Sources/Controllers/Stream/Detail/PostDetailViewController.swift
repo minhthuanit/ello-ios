@@ -9,7 +9,7 @@ public final class PostDetailViewController: StreamableViewController {
     var navigationBar: ElloNavigationBar!
     var localToken: String!
     var deeplinkPath: String?
-    var generator: PostDetailGenerator!
+    var generator: PostDetailGenerator?
 
     required public init(postParam: String) {
         self.postParam = postParam
@@ -54,6 +54,11 @@ public final class PostDetailViewController: StreamableViewController {
         updateInsets(navBar: navigationBar, streamController: streamViewController)
     }
 
+    override public func didSetCurrentUser() {
+        generator?.currentUser = currentUser
+        super.didSetCurrentUser()
+    }
+
     override public func showNavBars(scrollToBottom: Bool) {
         super.showNavBars(scrollToBottom)
         positionNavBar(navigationBar, visible: true)
@@ -73,7 +78,7 @@ public final class PostDetailViewController: StreamableViewController {
     // MARK : private
 
     private func reloadEntirePostDetail() {
-        generator.bind()
+        generator?.bind()
     }
 
     private func showPostLoadFailure() {
