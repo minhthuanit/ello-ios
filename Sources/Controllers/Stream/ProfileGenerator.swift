@@ -6,6 +6,7 @@ public final class ProfileGenerator: StreamGenerator {
 
     private var user: User?
     private let userParam: String
+    private var posts: [Post]?
 
     func headerItems() -> [StreamCellItem] {
         guard let user = user else { return [] }
@@ -36,6 +37,11 @@ public final class ProfileGenerator: StreamGenerator {
         setInitialUser()
         loadUser()
         loadUserPosts()
+    }
+
+    public func toggleGrid() {
+        guard let posts = posts else { return }
+        destination?.replacePlaceholder(.ProfilePosts, items: parse(posts))
     }
 
 }
@@ -79,6 +85,7 @@ private extension ProfileGenerator {
             userParam,
             success: { [weak self] (posts, responseConfig) in
                 guard let sself = self else { return }
+                sself.posts = posts
                 let userPostItems = sself.parse(posts)
                 sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
             },

@@ -349,13 +349,7 @@ public final class ProfileViewController: StreamableViewController {
     }
 
     func toggleGrid(isGridView: Bool) {
-//        guard let user = user, responseConfig = streamViewController.responseConfig else { return }
-//
-//        if let headerItems = headerItems {
-//            streamViewController.appendStreamCellItems(headerItems)
-//        }
-        // TODO: re-layout posts
-//        userLoaded(user, responseConfig: responseConfig, isReload: false)
+        generator.toggleGrid()
     }
 
 
