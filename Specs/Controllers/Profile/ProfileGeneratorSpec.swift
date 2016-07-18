@@ -26,7 +26,7 @@ class ProfileGeneratorSpec: QuickSpec {
                 destination: destination
             )
 
-            fdescribe("bind()") {
+            describe("bind()") {
 
                 it("sets 2 placeholders") {
                     subject.bind()

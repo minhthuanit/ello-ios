@@ -27,7 +27,7 @@ class PostDetailGeneratorSpec: QuickSpec {
                 destination: destination
             )
             
-            fdescribe("bind()") {
+            describe("bind()") {
 
                 it("sets 4 placeholders") {
                     subject.bind()
