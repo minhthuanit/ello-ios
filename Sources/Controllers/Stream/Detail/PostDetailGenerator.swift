@@ -66,7 +66,6 @@ private extension PostDetailGenerator {
             postParam,
             needsComments: false,
             success: { [weak self] (post, responseConfig) in
-                print("loaded post: \(post.id)")
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.post = post
@@ -89,7 +88,6 @@ private extension PostDetailGenerator {
             success: { [weak self] (comments, responseConfig) in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
-                print("loaded comments: \(comments.count)")
                 let commentItems = sself.parse(comments)
                 sself.destination?.replacePlaceholder(.PostComments, items: commentItems)
             },
@@ -103,7 +101,6 @@ private extension PostDetailGenerator {
         PostService().loadPostLovers(
             postParam,
             success: { [weak self] (users, _) in
-                print("loaded lovers: \(users.count)")
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 guard users.count > 0 else { return }
@@ -125,7 +122,6 @@ private extension PostDetailGenerator {
         PostService().loadPostReposters(
             postParam,
             success: { [weak self] (users, _) in
-                print("loaded reposters: \(users.count)")
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 guard users.count > 0 else { return }
