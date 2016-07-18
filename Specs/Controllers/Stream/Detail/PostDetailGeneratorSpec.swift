@@ -27,15 +27,15 @@ class PostDetailGeneratorSpec: QuickSpec {
                 destination: destination
             )
             
-            describe("bind()") {
+            describe("load()") {
 
                 it("sets 4 placeholders") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.placeholderItems.count) == 4
                 }
 
                 it("replaces only PostHeader, PostLovers, PostReposters and PostComment") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.headerItems.count) > 0
                     expect(destination.postLoverItems.count) > 0
                     expect(destination.postReposterItems.count) > 0
@@ -44,12 +44,12 @@ class PostDetailGeneratorSpec: QuickSpec {
                 }
 
                 it("sets the primary jsonable") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.post).toNot(beNil())
                 }
 
                 it("sets the config response") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.responseConfig).toNot(beNil())
                 }
             }

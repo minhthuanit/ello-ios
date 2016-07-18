@@ -213,7 +213,7 @@ public final class ProfileViewController: StreamableViewController {
 
     private func reloadEntireProfile() {
         coverImage.alpha = 0
-        generator?.bind()
+        generator?.load()
     }
 
     private func showUserLoadFailure() {

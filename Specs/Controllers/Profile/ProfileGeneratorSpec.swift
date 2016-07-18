@@ -26,27 +26,27 @@ class ProfileGeneratorSpec: QuickSpec {
                 destination: destination
             )
 
-            describe("bind()") {
+            describe("load()") {
 
                 it("sets 2 placeholders") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.placeholderItems.count) == 2
                 }
 
                 it("replaces only ProfileHeader and ProfilePosts") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.headerItems.count) > 0
                     expect(destination.postItems.count) > 0
                     expect(destination.otherPlaceHolderLoaded) == false
                 }
 
                 it("sets the primary jsonable") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.user).toNot(beNil())
                 }
 
                 it("sets the config response") {
-                    subject.bind()
+                    subject.load()
                     expect(destination.responseConfig).toNot(beNil())
                 }
             }

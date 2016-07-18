@@ -27,7 +27,7 @@ public final class PostDetailGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    public func bind() {
+    public func load() {
         localToken = loadingToken.resetInitialPageLoadingToken()
         setPlaceHolders()
         setInitialPost()

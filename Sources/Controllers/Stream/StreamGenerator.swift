@@ -2,7 +2,7 @@ import Foundation
 
 public protocol StreamGenerator {
 
-    func bind()
+    func load()
 
     var currentUser: User? { get }
     var streamKind: StreamKind { get }

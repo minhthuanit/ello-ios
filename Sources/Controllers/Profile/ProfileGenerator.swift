@@ -39,7 +39,7 @@ public final class ProfileGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    public func bind() {
+    public func load() {
         localToken = loadingToken.resetInitialPageLoadingToken()
         setPlaceHolders()
         setInitialUser()

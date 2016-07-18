@@ -78,7 +78,7 @@ public final class PostDetailViewController: StreamableViewController {
     // MARK : private
 
     private func reloadEntirePostDetail() {
-        generator?.bind()
+        generator?.load()
     }
 
     private func showPostLoadFailure() {
