@@ -110,7 +110,6 @@ public final class ProfileViewController: StreamableViewController {
             userParam: userParam,
             user: self.user,
             streamKind: self.streamViewController.streamKind,
-            streamViewController: self.streamViewController,
             destination: self
         )
         view.clipsToBounds = true
@@ -213,7 +212,6 @@ public final class ProfileViewController: StreamableViewController {
     // MARK : private
 
     private func reloadEntireProfile() {
-//        let localToken = streamViewController.resetInitialPageLoadingToken()
         coverImage.alpha = 0
         generator?.bind()
     }

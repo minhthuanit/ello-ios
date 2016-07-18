@@ -197,13 +197,13 @@ extension OnboardingUserListViewController {
 extension OnboardingUserListViewController {
 
     func loadUsers() {
-        let localToken = streamViewController.resetInitialPageLoadingToken()
+        let localToken = streamViewController.loadingToken.resetInitialPageLoadingToken()
 
         streamViewController.streamService.loadStream(
             streamViewController.streamKind.endpoint,
             streamKind: streamViewController.streamKind,
             success: { (jsonables, responseConfig) in
-                if !self.streamViewController.isValidInitialPageLoadingToken(localToken) { return }
+                if !self.streamViewController.loadingToken.isValidInitialPageLoadingToken(localToken) { return }
 
                 if let users = jsonables as? [User] {
                     self.usersLoaded(users)

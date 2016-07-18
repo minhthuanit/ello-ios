@@ -108,6 +108,14 @@ public final class StreamViewController: BaseElloViewController {
     var relationshipController: RelationshipController?
     public var responseConfig: ResponseConfig?
     public let streamService = StreamService()
+    lazy public var loadingToken: LoadingToken = {
+        var token = LoadingToken()
+        token.doneLoadingClosure = {
+            self.doneLoading()
+        }
+        return token
+    }()
+
     public var pullToRefreshView: SSPullToRefreshView?
     var allOlderPagesLoaded = false
     public var initialLoadClosure: ElloEmptyCompletion?
@@ -291,34 +299,19 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public var loadInitialPageLoadingToken: String = ""
-    public func resetInitialPageLoadingToken() -> String {
-        let newToken = NSUUID().UUIDString
-        loadInitialPageLoadingToken = newToken
-        return newToken
-    }
-    public func isValidInitialPageLoadingToken(token: String) -> Bool {
-        return loadInitialPageLoadingToken == token
-    }
-
-    public func cancelInitialPage() {
-        resetInitialPageLoadingToken()
-        self.doneLoading()
-    }
-
     public func loadInitialPage() {
 
         if let initialLoadClosure = initialLoadClosure {
             initialLoadClosure()
         }
         else {
-            let localToken = resetInitialPageLoadingToken()
+            let localToken = loadingToken.resetInitialPageLoadingToken()
 
             streamService.loadStream(
                 streamKind.endpoint,
                 streamKind: streamKind,
                 success: { (jsonables, responseConfig) in
-                    guard self.isValidInitialPageLoadingToken(localToken) else { return }
+                    guard self.loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
 
                     self.responseConfig = responseConfig
                     self.showInitialJSONAbles(jsonables)

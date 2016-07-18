@@ -74,7 +74,7 @@ extension SearchViewController: SearchScreenDelegate {
         showNavBars(false)
         searchText = ""
         streamViewController.removeAllCellItems()
-        streamViewController.cancelInitialPage()
+        streamViewController.loadingToken.cancelInitialPage()
         streamViewController.noResultsMessages = (title: "", body: "")
     }
 

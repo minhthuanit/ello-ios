@@ -7,9 +7,6 @@ public protocol StreamGenerator {
     var currentUser: User? { get }
     var streamKind: StreamKind { get }
     weak var destination: StreamDestination? { get }
-    // This is temporary until we move everything over to generators
-    // we need the streamVC for initial load tokens
-    var streamViewController: StreamViewController { get }
 }
 
 extension StreamGenerator {

@@ -20,7 +20,7 @@ public final class PostDetailViewController: StreamableViewController {
                 self.post = post
             }
         }
-        self.localToken = streamViewController.resetInitialPageLoadingToken()
+        self.localToken = streamViewController.loadingToken.resetInitialPageLoadingToken()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -37,7 +37,6 @@ public final class PostDetailViewController: StreamableViewController {
             postParam: postParam,
             post: self.post,
             streamKind: self.streamViewController.streamKind,
-            streamViewController: self.streamViewController,
             destination: self
         )
         ElloHUD.showLoadingHudInView(streamViewController.view)
