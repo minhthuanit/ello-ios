@@ -110,7 +110,7 @@ public final class StreamViewController: BaseElloViewController {
     public let streamService = StreamService()
     lazy public var loadingToken: LoadingToken = {
         var token = LoadingToken()
-        token.doneLoadingClosure = {
+        token.cancelLoadingClosure = {
             self.doneLoading()
         }
         return token

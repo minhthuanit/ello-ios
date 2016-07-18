@@ -5,8 +5,8 @@
 import Foundation
 
 public struct LoadingToken {
-    public var loadInitialPageLoadingToken: String = ""
-    public var doneLoadingClosure: ElloEmptyCompletion = {}
+    private var loadInitialPageLoadingToken: String = ""
+    public var cancelLoadingClosure: ElloEmptyCompletion = {}
 
     public mutating func resetInitialPageLoadingToken() -> String {
         let newToken = NSUUID().UUIDString
@@ -20,6 +20,6 @@ public struct LoadingToken {
 
     public mutating func cancelInitialPage() {
         resetInitialPageLoadingToken()
-        self.doneLoadingClosure()
+        self.cancelLoadingClosure()
     }
 }
