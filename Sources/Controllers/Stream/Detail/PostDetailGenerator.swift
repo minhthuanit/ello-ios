@@ -6,33 +6,29 @@ public final class PostDetailGenerator: StreamGenerator {
 
     public var currentUser: User?
     public var streamKind: StreamKind
-    // This is temporary until we move everything over to generators
-    // we need the streamVC for initial load tokens
-    public var streamViewController: StreamViewController
     weak public var destination: StreamDestination?
 
     private var post: Post?
     private let postParam: String
     private var localToken: String!
+    private var loadingToken = LoadingToken()
 
-    init(currentUser: User?,
+    public init(currentUser: User?,
          postParam: String,
          post: Post?,
          streamKind: StreamKind,
-         streamViewController: StreamViewController,
          destination: StreamDestination
         ) {
         self.currentUser = currentUser
         self.post = post
         self.postParam = postParam
         self.streamKind = streamKind
-        self.streamViewController = streamViewController
-        self.localToken = streamViewController.resetInitialPageLoadingToken()
+        self.localToken = loadingToken.resetInitialPageLoadingToken()
         self.destination = destination
     }
 
     public func bind() {
-        localToken = streamViewController.resetInitialPageLoadingToken()
+        localToken = loadingToken.resetInitialPageLoadingToken()
         setPlaceHolders()
         setInitialPost()
         loadPost()
@@ -72,7 +68,7 @@ private extension PostDetailGenerator {
             success: { [weak self] (post, responseConfig) in
                 print("loaded post: \(post.id)")
                 guard let sself = self else { return }
-                guard sself.streamViewController.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 sself.post = post
                 // TODO: make sure this responseConfig is what we want. We might want to use the comments response config
                 sself.destination?.setPagingConfig(responseConfig)
@@ -87,12 +83,12 @@ private extension PostDetailGenerator {
     }
 
     func loadPostComments() {
-        guard streamViewController.isValidInitialPageLoadingToken(localToken) else { return }
+        guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
         PostService().loadPostComments(
             postParam,
             success: { [weak self] (comments, responseConfig) in
                 guard let sself = self else { return }
-                guard sself.streamViewController.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 print("loaded comments: \(comments.count)")
                 let commentItems = sself.parse(comments)
                 sself.destination?.replacePlaceholder(.PostComments, items: commentItems)
@@ -103,13 +99,13 @@ private extension PostDetailGenerator {
     }
 
     func loadPostLovers() {
-        guard streamViewController.isValidInitialPageLoadingToken(localToken) else { return }
+        guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
         PostService().loadPostLovers(
             postParam,
             success: { [weak self] (users, _) in
                 print("loaded lovers: \(users.count)")
                 guard let sself = self else { return }
-                guard sself.streamViewController.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 guard users.count > 0 else { return }
 
                 let loversItems = sself.userAvatarCellItems(
@@ -125,13 +121,13 @@ private extension PostDetailGenerator {
     }
 
     func loadPostReposters() {
-        guard streamViewController.isValidInitialPageLoadingToken(localToken) else { return }
+        guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
         PostService().loadPostReposters(
             postParam,
             success: { [weak self] (users, _) in
                 print("loaded reposters: \(users.count)")
                 guard let sself = self else { return }
-                guard sself.streamViewController.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
                 guard users.count > 0 else { return }
 
                 let repostersItems = sself.userAvatarCellItems(

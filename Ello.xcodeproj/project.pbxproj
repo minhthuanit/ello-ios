@@ -76,8 +76,6 @@
 		1207C9AD1C75314300939ADB /* OmnibarRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF50C901C614C4400C62D89 /* OmnibarRegion.swift */; };
 		1207C9AF1C75386F00939ADB /* ElloProviderLinkExension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */; };
 		1207C9B11C7538D100939ADB /* ShareElloProviderLinkOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */; };
-		1209E9B51D21E77D00CC3511 /* ProfileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1209E9B41D21E77D00CC3511 /* ProfileGenerator.swift */; };
-		120DDA5D1D1DDD2800007C8C /* PostDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120DDA5C1D1DDD2700007C8C /* PostDetailGenerator.swift */; };
 		120FF6C61C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C51C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift */; };
 		120FF6C81C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */; };
 		120FF6C91C6D8F5500D5BABD /* ShareRegionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */; };
@@ -235,6 +233,13 @@
 		123466161C65468100E61110 /* ello_logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 769051001AFD2A720011B09A /* ello_logo.svg */; };
 		12384EBB1C56B3C200608BD8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */; };
 		12384EBD1C56C8B200608BD8 /* UIViewExtensionsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */; };
+		123DEBE91D3D4087007B5F86 /* PostDetailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */; };
+		123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */; };
+		123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */; };
+		123DEBEF1D3D4B71007B5F86 /* LoadingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBEE1D3D4B71007B5F86 /* LoadingToken.swift */; };
+		123DEBF11D3D5F32007B5F86 /* users_posts.json in Resources */ = {isa = PBXBuildFile; fileRef = 123DEBF01D3D5F32007B5F86 /* users_posts.json */; };
+		123DEBF61D3D644E007B5F86 /* PostDetailViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBF51D3D644E007B5F86 /* PostDetailViewControllerSpec.swift */; };
+		123DEBF81D3D645A007B5F86 /* PostDetailGeneratorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123DEBF71D3D645A007B5F86 /* PostDetailGeneratorSpec.swift */; };
 		1243576A1A8927BF008B24FB /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124357691A8927BF008B24FB /* NotificationsViewController.swift */; };
 		12450FD51AC86F630084BDBA /* StreamToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12450FD41AC86F630084BDBA /* StreamToggleCell.xib */; };
 		1245ED381D1C772400929DD4 /* StreamGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1245ED371D1C772400929DD4 /* StreamGenerator.swift */; };
@@ -428,7 +433,6 @@
 		1D15C27B1C7D13050013B192 /* InterfaceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2771C7D12890013B192 /* InterfaceString.swift */; };
 		1D15C27C1C7D137F0013B192 /* InterfaceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D15C2761C7D12890013B192 /* InterfaceImage.swift */; };
 		1D1AF6231A83ED7F00E06C93 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1AF6221A83ED7F00E06C93 /* PostDetailViewController.swift */; };
-		1D1AF6261A83F02000E06C93 /* PostDetailViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1AF6251A83F02000E06C93 /* PostDetailViewControllerSpec.swift */; };
 		1D1AF6281A84437B00E06C93 /* StreamableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1AF6271A84437B00E06C93 /* StreamableViewController.swift */; };
 		1D1C162C1B1D034100C4F27C /* TemporaryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */; };
 		1D1C88AB1AC9B71600AFC56D /* UIImageSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */; };
@@ -983,8 +987,6 @@
 		1207C9991C750E4B00939ADB /* ShareTrackerOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareTrackerOverrides.swift; sourceTree = "<group>"; };
 		1207C9AE1C75386F00939ADB /* ElloProviderLinkExension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElloProviderLinkExension.swift; sourceTree = "<group>"; };
 		1207C9B01C7538D100939ADB /* ShareElloProviderLinkOverrides.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareElloProviderLinkOverrides.swift; sourceTree = "<group>"; };
-		1209E9B41D21E77D00CC3511 /* ProfileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGenerator.swift; sourceTree = "<group>"; };
-		120DDA5C1D1DDD2700007C8C /* PostDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGenerator.swift; sourceTree = "<group>"; };
 		120FF6C51C6C453300D5BABD /* ShareAttachmentProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareAttachmentProcessorSpec.swift; sourceTree = "<group>"; };
 		120FF6C71C6D8F5500D5BABD /* ShareRegionProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessor.swift; sourceTree = "<group>"; };
 		120FF6CA1C6D903D00D5BABD /* ShareRegionProcessorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareRegionProcessorSpec.swift; sourceTree = "<group>"; };
@@ -1041,6 +1043,13 @@
 		123466141C650B3000E61110 /* NSItemProviderExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSItemProviderExtensions.swift; sourceTree = "<group>"; };
 		12384EBA1C56B3C200608BD8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensions.swift; path = sources/Extensions/UIViewExtensions.swift; sourceTree = SOURCE_ROOT; };
 		12384EBC1C56C8B200608BD8 /* UIViewExtensionsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensionsSpec.swift; path = specs/Extensions/UIViewExtensionsSpec.swift; sourceTree = SOURCE_ROOT; };
+		123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGenerator.swift; sourceTree = "<group>"; };
+		123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGenerator.swift; sourceTree = "<group>"; };
+		123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGeneratorSpec.swift; sourceTree = "<group>"; };
+		123DEBEE1D3D4B71007B5F86 /* LoadingToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingToken.swift; sourceTree = "<group>"; };
+		123DEBF01D3D5F32007B5F86 /* users_posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users_posts.json; sourceTree = "<group>"; };
+		123DEBF51D3D644E007B5F86 /* PostDetailViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewControllerSpec.swift; sourceTree = "<group>"; };
+		123DEBF71D3D645A007B5F86 /* PostDetailGeneratorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailGeneratorSpec.swift; sourceTree = "<group>"; };
 		124357691A8927BF008B24FB /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		12450FD41AC86F630084BDBA /* StreamToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamToggleCell.xib; path = sources/controllers/stream/Cells/StreamToggleCell.xib; sourceTree = SOURCE_ROOT; };
 		1245ED371D1C772400929DD4 /* StreamGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamGenerator.swift; sourceTree = "<group>"; };
@@ -1250,7 +1259,6 @@
 		1D15C2761C7D12890013B192 /* InterfaceImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceImage.swift; sourceTree = "<group>"; };
 		1D15C2771C7D12890013B192 /* InterfaceString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterfaceString.swift; sourceTree = "<group>"; };
 		1D1AF6221A83ED7F00E06C93 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
-		1D1AF6251A83F02000E06C93 /* PostDetailViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewControllerSpec.swift; sourceTree = "<group>"; };
 		1D1AF6271A84437B00E06C93 /* StreamableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamableViewController.swift; sourceTree = "<group>"; };
 		1D1C162B1B1D034100C4F27C /* TemporaryCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemporaryCache.swift; sourceTree = "<group>"; };
 		1D1C88AA1AC9B71600AFC56D /* UIImageSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageSpecs.swift; sourceTree = "<group>"; };
@@ -1813,6 +1821,7 @@
 				1207C96B1C73FEE000939ADB /* S3UploadingService.swift */,
 				1207C96C1C73FEE000939ADB /* StreamService.swift */,
 				1207C96D1C73FEE000939ADB /* UserService.swift */,
+				123DEBEE1D3D4B71007B5F86 /* LoadingToken.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1839,8 +1848,8 @@
 				12F47DCF1AD7137000A73B5F /* CellDequeing */,
 				12F47DCE1AD7134200A73B5F /* Cells */,
 				1266E50F1A9E2BDF00270E1C /* ContentFlaggerSpec.swift */,
+				123DEBF21D3D63FE007B5F86 /* Detail */,
 				1D652F591BC2D66200AF3B06 /* PostbarControllerSpec.swift */,
-				1D1AF6251A83F02000E06C93 /* PostDetailViewControllerSpec.swift */,
 				76CCEEDC1ACC8D4B00978663 /* StreamableViewControllerSpec.swift */,
 				127BAD5B1A83F01700628696 /* StreamCellItemParserSpec.swift */,
 				12B093651A6D87C000BF104E /* StreamContainerViewControllerSpec.swift */,
@@ -1960,6 +1969,15 @@
 			);
 			name = Fakes;
 			path = ../specs/Fakes;
+			sourceTree = "<group>";
+		};
+		123DEBF21D3D63FE007B5F86 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				123DEBF51D3D644E007B5F86 /* PostDetailViewControllerSpec.swift */,
+				123DEBF71D3D645A007B5F86 /* PostDetailGeneratorSpec.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		124357681A89276E008B24FB /* Notifications */ = {
@@ -2152,8 +2170,6 @@
 				128D36A51A95174C00622833 /* StreamKind.swift */,
 				121700981A7841C400EBACA5 /* StreamViewController.swift */,
 				1245ED371D1C772400929DD4 /* StreamGenerator.swift */,
-				120DDA5C1D1DDD2700007C8C /* PostDetailGenerator.swift */,
-				1209E9B41D21E77D00CC3511 /* ProfileGenerator.swift */,
 			);
 			path = Stream;
 			sourceTree = "<group>";
@@ -2800,6 +2816,7 @@
 		1D1AF61E1A83ED6600E06C93 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				123DEBE81D3D4087007B5F86 /* PostDetailGenerator.swift */,
 				1D1AF6221A83ED7F00E06C93 /* PostDetailViewController.swift */,
 			);
 			path = Detail;
@@ -2842,6 +2859,7 @@
 		1D66801E1A89B862003E93C8 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				123DEBEA1D3D409C007B5F86 /* ProfileGenerator.swift */,
 				769865C01A8D3E3F009B6292 /* ProfileHeaderCell.swift */,
 				769865BD1A8D2DCF009B6292 /* ProfileHeaderCell.xib */,
 				7618E60C1AC1C1470038AF68 /* ProfileHeaderCellSizeCalculator.swift */,
@@ -2906,6 +2924,7 @@
 			isa = PBXGroup;
 			children = (
 				1D5A901B1D3991CC00C2AEFF /* affiliate-image-region.json */,
+				123DEBF01D3D5F32007B5F86 /* users_posts.json */,
 				1DC10FA31C3DEB7600846ED6 /* availability__error.json */,
 				1DC10FA41C3DEB7600846ED6 /* availability.json */,
 				1D5933721D10BB5B00EAF03D /* categories.json */,
@@ -3024,6 +3043,7 @@
 		768043741AC202D3004FEE09 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				123DEBEC1D3D4201007B5F86 /* ProfileGeneratorSpec.swift */,
 				768043751AC20317004FEE09 /* ProfileViewControllerSpec.swift */,
 			);
 			path = Profile;
@@ -3562,6 +3582,7 @@
 				76F8DEC41B6C0BC4009BCF61 /* circ_selected.svg in Resources */,
 				12F6AE9B1A433F2700493660 /* 420.json in Resources */,
 				1D6680451A8AC8E0003E93C8 /* selected-pixel@2x.png in Resources */,
+				123DEBF11D3D5F32007B5F86 /* users_posts.json in Resources */,
 				12F6AE981A433F2700493660 /* 403.json in Resources */,
 				76F8DEC81B6C0BC4009BCF61 /* danger_red.svg in Resources */,
 				1DD829A21BD93D3600105CDE /* relationship_following.json in Resources */,
@@ -4156,6 +4177,7 @@
 				1D2F65C31D1D88DD0099D036 /* CategoryListCellPresenterSpec.swift in Sources */,
 				1D7A28D31A97A7490050E8A2 /* NotificationAttributedTitleSpec.swift in Sources */,
 				768043761AC20317004FEE09 /* ProfileViewControllerSpec.swift in Sources */,
+				123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */,
 				76BE9C571B2B77D7007575AA /* UserListItemCellPresenterSpec.swift in Sources */,
 				1D59337B1D136E0500EAF03D /* CategoryListCellSpec.swift in Sources */,
 				762385C91B0143A500138780 /* NumberExtensionsSpec.swift in Sources */,
@@ -4170,6 +4192,7 @@
 				76224E451B3C97B0004EBDD9 /* ElloWebViewHelperSpec.swift in Sources */,
 				F8A33EDF1AB0D5B9005DE9BB /* RelationshipSpec.swift in Sources */,
 				1D3DED7A1AE170A100F1D514 /* QuickExtensions.swift in Sources */,
+				123DEBF61D3D644E007B5F86 /* PostDetailViewControllerSpec.swift in Sources */,
 				12CEC2BA1AB21087000DC184 /* ImageRegionSpec.swift in Sources */,
 				1D73AB901C57C85600D708B9 /* AuthStateSpec.swift in Sources */,
 				F87A101E1AF1700F00A48E7F /* PushNotificationControllerSpec.swift in Sources */,
@@ -4192,7 +4215,6 @@
 				12D14C6B1A43761A00C6F8E8 /* StreamServiceSpec.swift in Sources */,
 				EA68A0E11AADF4AB003F0425 /* InviteServiceSpec.swift in Sources */,
 				F8D1606A1AB75C2900575B25 /* DrawerViewDataSourceSpec.swift in Sources */,
-				1D1AF6261A83F02000E06C93 /* PostDetailViewControllerSpec.swift in Sources */,
 				12D14C681A43761A00C6F8E8 /* AuthTokenSpec.swift in Sources */,
 				1D7B93971C5AA2D9006CFA0B /* InteractionVisibilitySpec.swift in Sources */,
 				1D7750F41ABB391500D92191 /* TmpSpec.swift in Sources */,
@@ -4280,6 +4302,7 @@
 				122C663A1B42529B0035F4CD /* AutoCompleteViewControllerSpec.swift in Sources */,
 				1266E5101A9E2BDF00270E1C /* ContentFlaggerSpec.swift in Sources */,
 				12916A421B7AA88D005B9CCF /* StreamKindSpec.swift in Sources */,
+				123DEBF81D3D645A007B5F86 /* PostDetailGeneratorSpec.swift in Sources */,
 				1D15539C1BCC7DA300507F7D /* AvatarImageSelectionViewControllerSpec.swift in Sources */,
 				1D98563F1C723B7C00C1BF78 /* DrawerAnimatorsSpec.swift in Sources */,
 				1D0832111AAA56EF0076C67D /* AmazonCredentialsSpec.swift in Sources */,
@@ -4374,6 +4397,7 @@
 				128D36B31A951F1700622833 /* StreamTextCellPresenter.swift in Sources */,
 				12BF64C21AB9E82C000B2544 /* ElloLabel.swift in Sources */,
 				EA587A9F1ACDC6F4002AF389 /* ElloEditableTextView.swift in Sources */,
+				123DEBE91D3D4087007B5F86 /* PostDetailGenerator.swift in Sources */,
 				1229432B1C6BF564003FCD20 /* NSItemProviderExtensions.swift in Sources */,
 				F87928681ACC6D6600579BE1 /* AlertViewController.swift in Sources */,
 				12F0E3AF1A4333550012CEA2 /* AppDelegate.swift in Sources */,
@@ -4544,14 +4568,12 @@
 				122DEA201AB0A024005DF1F1 /* NSFileManagerExtensions.swift in Sources */,
 				1267C7391BA232530000D809 /* MutableBox.swift in Sources */,
 				76C0A51E1AB38C69009B96E6 /* UIButtonExtensions.swift in Sources */,
-				1209E9B51D21E77D00CC3511 /* ProfileGenerator.swift in Sources */,
 				1D24AA511B7E8CD5004BAAFA /* DebugTodoController.swift in Sources */,
 				1DDF3C501A9D2592000D0945 /* ElloScrollLogic.swift in Sources */,
 				127B8C751BC320AD00E17D0A /* ColumnToggleCellPresenter.swift in Sources */,
 				F8D160681AB75B1D00575B25 /* DrawerViewDataSource.swift in Sources */,
 				EA8990181ABB4B6B00339CBE /* SettingsViewController.swift in Sources */,
 				76B0B18F1B41B06C004C2D7B /* UserAvatarsCellPresenter.swift in Sources */,
-				120DDA5D1D1DDD2800007C8C /* PostDetailGenerator.swift in Sources */,
 				1D3DED771AE16D1B00F1D514 /* JoinViewController.swift in Sources */,
 				122B30EE1C6A3FC500C1B9D8 /* Attachment.swift in Sources */,
 				1DF4040C1B151BE70073460B /* UITabBarExtensions.swift in Sources */,
@@ -4577,6 +4599,7 @@
 				86E4F2ED1B14FE6F008EBC5B /* FriendsPageController.swift in Sources */,
 				1207C9801C73FEE000939ADB /* ErrorStatusCode.swift in Sources */,
 				122B30D71C6A3FBC00C1B9D8 /* Post.swift in Sources */,
+				123DEBEB1D3D409C007B5F86 /* ProfileGenerator.swift in Sources */,
 				1DFC0AF51B0BE6FE004AE8C4 /* ProfileInfoViewController.swift in Sources */,
 				1D273A361D08A480009FD393 /* BlockUserModalConfig.swift in Sources */,
 				1DFC26A91AF297150051D491 /* NSErrorExtensions.swift in Sources */,
@@ -4587,6 +4610,7 @@
 				128D36BC1A952E3E00622833 /* ElloPostToolBarOption.swift in Sources */,
 				1DFF43461A8C171400D43CFF /* NotificationFilterButton.swift in Sources */,
 				1207C9831C73FEE000939ADB /* Mapper.swift in Sources */,
+				123DEBEF1D3D4B71007B5F86 /* LoadingToken.swift in Sources */,
 				1207C9901C73FEE000939ADB /* StreamService.swift in Sources */,
 				1D59338C1D147EA400EAF03D /* CategoryCellPresenter.swift in Sources */,
 				1DB22FF91BE7E3420016055E /* NewElloTabBar.swift in Sources */,
