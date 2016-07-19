@@ -4,39 +4,74 @@
 
 import Foundation
 
-class AsyncOperation: NSOperation {
-    typealias Block = (() -> Void) -> Void
-    let block: Block
+public class AsyncOperation: NSOperation {
+    public typealias AsyncBlock = (() -> Void) -> Void
+    var _block: AsyncBlock?
+    var block: AsyncBlock? {
+        get { return _block }
+        set {
+            guard _block == nil else { return }
+            _block = newValue
+            if cancelled && _executing {
+                changeExecuting(false)
+            }
+            else if let block = newValue where _executing {
+                block(done)
+            }
+        }
+    }
     private var _executing: Bool = false
-    override var executing: Bool {
+    override public var executing: Bool {
         return _executing
     }
     private var _finished: Bool = false
-    override var finished: Bool {
+    override public var finished: Bool {
         return _finished
     }
-    override var asynchronous: Bool { return true }
+    override public var asynchronous: Bool { return true }
 
-    init(block: Block) {
-        self.block = block
+    public init(block: AsyncBlock? = nil) {
+        _block = block
         super.init()
     }
 
-    override func start() {
-        willChangeValueForKey("isExecuting")
-        _executing = true
-        didChangeValueForKey("isExecuting")
-
-        let done = {
-            self.willChangeValueForKey("isExecuting")
-            self._executing = false
-            self.didChangeValueForKey("isExecuting")
-
-            self.willChangeValueForKey("isFinished")
-            self._finished = true
-            self.didChangeValueForKey("isFinished")
+    override public func start() {
+        guard !_finished else {
+            return
+        }
+        guard !cancelled else {
+            done()
+            return
         }
 
-        block(done)
+        changeExecuting(true)
+        block?(done)
+    }
+
+    public func run(block: () -> Void = {}) {
+        self.block = { done in
+            block()
+            done()
+        }
+    }
+}
+
+private extension AsyncOperation {
+
+    private func done() {
+        changeExecuting(false)
+        changeFinished(true)
+    }
+
+    func changeFinished(finished: Bool) {
+        self.willChangeValueForKey("isFinished")
+        self._finished = finished
+        self.didChangeValueForKey("isFinished")
+    }
+
+    func changeExecuting(executing: Bool) {
+        self.willChangeValueForKey("isExecuting")
+        self._executing = executing
+        self.didChangeValueForKey("isExecuting")
     }
 }
