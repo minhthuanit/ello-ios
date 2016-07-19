@@ -119,6 +119,7 @@ public final class StreamViewController: BaseElloViewController {
     public var pullToRefreshView: SSPullToRefreshView?
     var allOlderPagesLoaded = false
     public var initialLoadClosure: ElloEmptyCompletion?
+    public var reloadClosure: ElloEmptyCompletion?
     public var toggleClosure: ToggleClosure?
     var initialDataLoaded = false
     var parentTabBarController: ElloTabBarController? {
@@ -299,9 +300,12 @@ public final class StreamViewController: BaseElloViewController {
         }
     }
 
-    public func loadInitialPage() {
+    public func loadInitialPage(reload reload: Bool = false) {
 
-        if let initialLoadClosure = initialLoadClosure {
+        if let reloadClosure = reloadClosure where reload {
+            reloadClosure()
+        }
+        else if let initialLoadClosure = initialLoadClosure {
             initialLoadClosure()
         }
         else {
@@ -717,7 +721,7 @@ extension StreamViewController: SSPullToRefreshViewDelegate {
 
     public func pullToRefreshViewDidStartLoading(view: SSPullToRefreshView!) {
         if pullToRefreshEnabled {
-            self.loadInitialPage()
+            self.loadInitialPage(reload: true)
         }
         else {
             pullToRefreshView?.finishLoading()

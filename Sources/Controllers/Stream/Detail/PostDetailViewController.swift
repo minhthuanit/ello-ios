@@ -40,7 +40,9 @@ public final class PostDetailViewController: StreamableViewController {
             destination: self
         )
         ElloHUD.showLoadingHudInView(streamViewController.view)
-        streamViewController.initialLoadClosure = reloadEntirePostDetail
+        streamViewController.initialLoadClosure = loadEntirePostDetail
+        streamViewController.reloadClosure = reloadEntirePostDetail
+
         streamViewController.loadInitialPage()
     }
 
@@ -77,8 +79,12 @@ public final class PostDetailViewController: StreamableViewController {
 
     // MARK : private
 
-    private func reloadEntirePostDetail() {
+    private func loadEntirePostDetail() {
         generator?.load()
+    }
+
+    private func reloadEntirePostDetail() {
+        generator?.load(reload: true)
     }
 
     private func showPostLoadFailure() {

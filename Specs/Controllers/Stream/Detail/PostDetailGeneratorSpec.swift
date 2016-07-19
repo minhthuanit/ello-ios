@@ -31,7 +31,7 @@ class PostDetailGeneratorSpec: QuickSpec {
 
                 it("sets 4 placeholders") {
                     subject.load()
-                    expect(destination.placeholderItems.count) == 4
+                    expect(destination.placeholderItems.count) == 6
                 }
 
                 it("replaces only PostHeader, PostLovers, PostReposters and PostComment") {
@@ -40,6 +40,8 @@ class PostDetailGeneratorSpec: QuickSpec {
                     expect(destination.postLoverItems.count) > 0
                     expect(destination.postReposterItems.count) > 0
                     expect(destination.postCommentItems.count) > 0
+                    expect(destination.postSocialPaddingItems.count) > 0
+                    expect(destination.postCommentBarItems.count) > 0
                     expect(destination.otherPlaceHolderLoaded) == false
                 }
 
@@ -64,6 +66,8 @@ class PostDetailDestination: NSObject, StreamDestination {
     var postLoverItems: [StreamCellItem] = []
     var postReposterItems: [StreamCellItem] = []
     var postCommentItems: [StreamCellItem] = []
+    var postSocialPaddingItems: [StreamCellItem] = []
+    var postCommentBarItems: [StreamCellItem] = []
     var otherPlaceHolderLoaded = false
     var post: Post?
     var responseConfig: ResponseConfig?
@@ -76,6 +80,8 @@ class PostDetailDestination: NSObject, StreamDestination {
         postLoverItems = []
         postReposterItems = []
         postCommentItems = []
+        postSocialPaddingItems = []
+        postCommentBarItems = []
         otherPlaceHolderLoaded = false
         post = nil
         responseConfig = nil
@@ -95,6 +101,10 @@ class PostDetailDestination: NSObject, StreamDestination {
             postReposterItems = items()
         case .PostComments:
             postCommentItems = items()
+        case .PostSocialPadding:
+            postSocialPaddingItems = items()
+        case .PostCommentBar:
+            postCommentBarItems = items()
         default:
             otherPlaceHolderLoaded = true
         }

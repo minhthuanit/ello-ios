@@ -14,6 +14,8 @@ public final class ProfileGenerator: StreamGenerator {
     private var localToken: String!
     private var loadingToken = LoadingToken()
 
+    private let queue = NSOperationQueue()
+
     func headerItems() -> [StreamCellItem] {
         guard let user = user else { return [] }
 
@@ -39,12 +41,15 @@ public final class ProfileGenerator: StreamGenerator {
         self.destination = destination
     }
 
-    public func load() {
+    public func load(reload reload: Bool = false) {
+        let doneOperation = AsyncOperation()
+        queue.addOperation(doneOperation)
+
         localToken = loadingToken.resetInitialPageLoadingToken()
         setPlaceHolders()
-        setInitialUser()
-        loadUser()
-        loadUserPosts()
+        setInitialUser(doneOperation)
+        loadUser(doneOperation, reload: reload)
+        loadUserPosts(doneOperation)
     }
 
     public func toggleGrid() {
@@ -63,14 +68,17 @@ private extension ProfileGenerator {
         ])
     }
 
-    func setInitialUser() {
+    func setInitialUser(doneOperation: AsyncOperation) {
         guard let user = user else { return }
 
         destination?.setPrimaryJSONAble(user)
         destination?.replacePlaceholder(.ProfileHeader, items: headerItems())
+        doneOperation.run()
     }
 
-    func loadUser() {
+    func loadUser(doneOperation: AsyncOperation, reload: Bool = false) {
+        guard !doneOperation.finished || reload else { return }
+
         // load the user with no posts
         StreamService().loadUser(
             streamKind.endpoint,
@@ -78,31 +86,42 @@ private extension ProfileGenerator {
             success: { [weak self] (user, responseConfig) in
                 guard let sself = self else { return }
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+
                 sself.user = user
-                sself.destination?.setPagingConfig(responseConfig)
                 sself.destination?.setPrimaryJSONAble(user)
                 sself.destination?.replacePlaceholder(.ProfileHeader, items: sself.headerItems())
+                doneOperation.run()
             },
             failure: { [weak self] _ in
                 guard let sself = self else { return }
                 sself.destination?.primaryJSONAbleNotFound()
+                sself.queue.cancelAllOperations()
         })
     }
 
-    func loadUserPosts() {
+    func loadUserPosts(doneOperation: AsyncOperation) {
         guard loadingToken.isValidInitialPageLoadingToken(localToken) else { return }
+        let displayPostsOperation = AsyncOperation()
+        displayPostsOperation.addDependency(doneOperation)
+        queue.addOperation(displayPostsOperation)
+
         StreamService().loadUserPosts(
             userParam,
             success: { [weak self] (posts, responseConfig) in
                 guard let sself = self else { return }
+
                 guard sself.loadingToken.isValidInitialPageLoadingToken(sself.localToken) else { return }
+                sself.destination?.setPagingConfig(responseConfig)
                 sself.posts = posts
                 let userPostItems = sself.parse(posts)
-                sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
+                displayPostsOperation.run {
+                    sself.destination?.replacePlaceholder(.ProfilePosts, items: userPostItems)
+                }
             },
             failure: { [weak self] _ in
                 guard let sself = self else { return }
                 sself.destination?.primaryJSONAbleNotFound()
+                sself.queue.cancelAllOperations()
         })
     }
 }

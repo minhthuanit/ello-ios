@@ -52,10 +52,12 @@ public enum StreamCellType: Equatable {
         case ProfileHeader
         case ProfilePosts
 
+        case PostCommentBar
+        case PostComments
         case PostHeader
         case PostLovers
         case PostReposters
-        case PostComments
+        case PostSocialPadding
     }
 
     static let all = [

@@ -283,6 +283,7 @@
 		126E05311B152DD70036DFA6 /* AlertHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126E05301B152DD70036DFA6 /* AlertHeaderView.swift */; };
 		126F2C011C5C1D7400D22BAB /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1275351C1B73D155006B9A0F /* NSDate.swift */; };
 		126F2C031C5C1D8D00D22BAB /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D8AFACE1A9691930034DDAD /* DictionaryExtensions.swift */; };
+		12706B9B1D3EC1D80028C9BE /* AsyncOperationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12706B9A1D3EC1D80028C9BE /* AsyncOperationSpec.swift */; };
 		127128261A77373300695F15 /* TypedNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127128251A77373300695F15 /* TypedNotifications.swift */; };
 		1274E0171CDBB2BF0064BA82 /* ElloAPIDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207C9551C73FEE000939ADB /* ElloAPIDescription.swift */; };
 		127502D41AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json in Resources */ = {isa = PBXBuildFile; fileRef = 127502D01AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json */; };
@@ -1099,6 +1100,7 @@
 		126DF2351C595C53003AB563 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
 		126E052E1B152CF00036DFA6 /* AlertHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AlertHeaderView.xib; path = sources/controllers/Alerts/AlertHeaderView.xib; sourceTree = SOURCE_ROOT; };
 		126E05301B152DD70036DFA6 /* AlertHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertHeaderView.swift; path = sources/controllers/Alerts/AlertHeaderView.swift; sourceTree = SOURCE_ROOT; };
+		12706B9A1D3EC1D80028C9BE /* AsyncOperationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncOperationSpec.swift; sourceTree = "<group>"; };
 		127128251A77373300695F15 /* TypedNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedNotifications.swift; sourceTree = "<group>"; };
 		127502D01AE99D6500FED224 /* push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json; path = resources/stubbedresponses/push_subscriptions__when_attempting_to_subscribe_with_an_invalid_provider_or_token.json; sourceTree = SOURCE_ROOT; };
 		127502D31AE99D6500FED224 /* full_examples_full_post_details.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = full_examples_full_post_details.json; path = resources/stubbedresponses/full_examples_full_post_details.json; sourceTree = SOURCE_ROOT; };
@@ -2292,6 +2294,7 @@
 			children = (
 				1D0832101AAA56EF0076C67D /* AmazonCredentialsSpec.swift */,
 				1D73AB911C58145600D708B9 /* AnonymousAuthenticationSpec.swift */,
+				12706B9A1D3EC1D80028C9BE /* AsyncOperationSpec.swift */,
 				1D73AB8F1C57C85600D708B9 /* AuthStateSpec.swift */,
 				12D14C641A43761A00C6F8E8 /* AuthTokenSpec.swift */,
 				125739151B432EB100EF7792 /* AutoCompleteServiceSpec.swift */,
@@ -2299,6 +2302,7 @@
 				1266E5141A9E3CA700270E1C /* ContentFlaggingServiceSpec.swift */,
 				12BF3CC01B66D68000CF4AE0 /* DateFormattingSpec.swift */,
 				12D14C651A43761A00C6F8E8 /* ElloAPISpec.swift */,
+				122CD3601C6E770200B37624 /* ElloManagerSpec.swift */,
 				12D14C661A43761A00C6F8E8 /* ElloProviderSpec.swift */,
 				765670EF1A8022B4008ED9A2 /* ElloURISpec.swift */,
 				EA68A0DE1AADF4AB003F0425 /* InviteServiceSpec.swift */,
@@ -2313,7 +2317,6 @@
 				F870D8F41ACB0BB000E25AA2 /* ResponseConfigSpec.swift */,
 				12D14C671A43761A00C6F8E8 /* StreamServiceSpec.swift */,
 				12FB94D91AD5AD5900547D3B /* UserServiceSpec.swift */,
-				122CD3601C6E770200B37624 /* ElloManagerSpec.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -4180,6 +4183,7 @@
 				123DEBED1D3D4201007B5F86 /* ProfileGeneratorSpec.swift in Sources */,
 				76BE9C571B2B77D7007575AA /* UserListItemCellPresenterSpec.swift in Sources */,
 				1D59337B1D136E0500EAF03D /* CategoryListCellSpec.swift in Sources */,
+				12706B9B1D3EC1D80028C9BE /* AsyncOperationSpec.swift in Sources */,
 				762385C91B0143A500138780 /* NumberExtensionsSpec.swift in Sources */,
 				1DBF85C11AF8022E00889349 /* ElloWebBrowserViewControllerSpec.swift in Sources */,
 				12D14C711A43762400C6F8E8 /* ElloNetworkErrorSpec.swift in Sources */,

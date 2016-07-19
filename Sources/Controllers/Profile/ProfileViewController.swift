@@ -86,7 +86,8 @@ public final class ProfileViewController: StreamableViewController {
 
     private func sharedInit() {
         streamViewController.streamKind = initialStreamKind
-        streamViewController.initialLoadClosure = reloadEntireProfile
+        streamViewController.initialLoadClosure = loadProfile
+        streamViewController.reloadClosure = reloadEntireProfile
         streamViewController.toggleClosure = toggleGrid
     }
 
@@ -211,9 +212,14 @@ public final class ProfileViewController: StreamableViewController {
 
     // MARK : private
 
-    private func reloadEntireProfile() {
+    private func loadProfile() {
         coverImage.alpha = 0
         generator?.load()
+    }
+
+    private func reloadEntireProfile() {
+        coverImage.alpha = 0
+        generator?.load(reload: true)
     }
 
     private func showUserLoadFailure() {

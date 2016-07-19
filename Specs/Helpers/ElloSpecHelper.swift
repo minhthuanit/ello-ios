@@ -46,6 +46,14 @@ class ElloConfiguration: QuickConfiguration {
     }
 }
 
+func delay(duration: NSTimeInterval, block: () -> Void) {
+    let killTimeOffset = Int64(CDouble(duration) * CDouble(NSEC_PER_SEC))
+    let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+    dispatch_after(killTime, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+        block()
+    }
+}
+
 func stubbedJSONData(file: String, _ propertyName: String) -> ([String:AnyObject]) {
     let loadedData:NSData = stubbedData(file)
     let json: AnyObject = try! NSJSONSerialization.JSONObjectWithData(loadedData, options: [])
