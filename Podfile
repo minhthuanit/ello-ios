@@ -34,6 +34,9 @@ def common_pods
   if ENV['ELLO_STAFF']
     pod 'ElloUIFonts', '~> 1.1.0'
     pod 'ElloCerts', '~> 1.1'
+  elsif ENV['ELLO_UI_FONTS_URL']
+    pod 'ElloUIFonts', '~> 1.1.0', git: ENV['ELLO_UI_FONTS_URL']
+    pod 'ElloOSSCerts', '~> 1.1'
   else
     pod 'ElloOSSUIFonts', '~> 1.0.1'
     pod 'ElloOSSCerts', '~> 1.1'
@@ -51,7 +54,7 @@ def common_pods
 end
 
 def spec_pods
-  pod 'FBSnapshotTestCase'
+  pod 'FBSnapshotTestCase', git: 'https://github.com/ello/ios-snapshot-test-case'
   pod 'Quick', '~> 0.9'
   pod 'Nimble', '~> 4.0'
   pod 'Nimble-Snapshots', git: 'https://github.com/ashfurrow/Nimble-Snapshots'
