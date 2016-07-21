@@ -13,21 +13,34 @@ public class AsyncOperation: NSOperation {
             guard _block == nil else { return }
             _block = newValue
             if cancelled && _executing {
-                changeExecuting(false)
+                executing = false
             }
             else if let block = newValue where _executing {
                 block(done)
             }
         }
     }
+
     private var _executing: Bool = false
     override public var executing: Bool {
-        return _executing
+        get { return _executing }
+        set {
+            willChangeValueForKey("isExecuting")
+            _executing = newValue
+            didChangeValueForKey("isExecuting")
+        }
     }
+
     private var _finished: Bool = false
     override public var finished: Bool {
-        return _finished
+        get { return _finished }
+        set {
+            willChangeValueForKey("isFinished")
+            _finished = newValue
+            didChangeValueForKey("isFinished")
+        }
     }
+
     override public var asynchronous: Bool { return true }
 
     public init(block: AsyncBlock? = nil) {
@@ -36,7 +49,7 @@ public class AsyncOperation: NSOperation {
     }
 
     override public func start() {
-        guard !_finished else {
+        guard !finished else {
             return
         }
         guard !cancelled else {
@@ -44,7 +57,7 @@ public class AsyncOperation: NSOperation {
             return
         }
 
-        changeExecuting(true)
+        executing = true
         block?(done)
     }
 
@@ -59,19 +72,7 @@ public class AsyncOperation: NSOperation {
 private extension AsyncOperation {
 
     func done() {
-        changeExecuting(false)
-        changeFinished(true)
-    }
-
-    func changeFinished(finished: Bool) {
-        self.willChangeValueForKey("isFinished")
-        self._finished = finished
-        self.didChangeValueForKey("isFinished")
-    }
-
-    func changeExecuting(executing: Bool) {
-        self.willChangeValueForKey("isExecuting")
-        self._executing = executing
-        self.didChangeValueForKey("isExecuting")
+        executing = false
+        finished = true
     }
 }
