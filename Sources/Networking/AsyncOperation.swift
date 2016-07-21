@@ -58,7 +58,7 @@ public class AsyncOperation: NSOperation {
 
 private extension AsyncOperation {
 
-    private func done() {
+    func done() {
         changeExecuting(false)
         changeFinished(true)
     }

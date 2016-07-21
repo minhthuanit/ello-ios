@@ -76,6 +76,7 @@ class AsyncOperationSpec: QuickSpec {
                 it("does not run when cancelled") {
                     let queue = NSOperationQueue()
                     var executed = false
+                    let subject = AsyncOperation()
                     queue.addOperation(subject)
                     queue.cancelAllOperations()
                     subject.run {

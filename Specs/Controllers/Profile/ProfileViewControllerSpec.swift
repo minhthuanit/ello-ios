@@ -112,13 +112,13 @@ class ProfileViewControllerSpec: QuickSpec {
 
                 beforeEach {
                     ElloProvider.sharedProvider = ElloProvider.RecordedStubbingProvider([
-                        RecordedResponse(endpoint: .UserStream(userParam: "42"), response: .NetworkResponse(200,
+                        RecordedResponse(endpoint: .UserStream(userParam: "50"), response: .NetworkResponse(200,
                             stubbedData("profile__no_sharing")
                         )),
                     ])
 
-                    currentUser = User.stub(["id": "not42"])
-                    subject = ProfileViewController(userParam: "42")
+                    currentUser = User.stub(["id": "not50"])
+                    subject = ProfileViewController(userParam: "50")
                     subject.currentUser = currentUser
                     showController(subject)
                 }
