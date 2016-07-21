@@ -52,7 +52,7 @@ class NSItemProviderExtensionsSpec: QuickSpec {
 
             describe("loadText(_:completion)") {
 
-                it("returns text") {
+                xit("returns text") {
                     let item = NSItemProvider(item: "it is text!", typeIdentifier: String(kUTTypeText))
                     waitUntil(timeout: 30) { done in
                         item.loadText(nil) { (item, error) in
@@ -67,7 +67,7 @@ class NSItemProviderExtensionsSpec: QuickSpec {
 
             describe("loadURL(_:completion)") {
 
-                it("returns a url") {
+                xit("returns a url") {
                     let item = NSItemProvider(item: NSURL(string: "https://ello.co"), typeIdentifier: String(kUTTypeURL))
                     waitUntil(timeout: 30) { done in
                         item.loadURL(nil) { (item, error) in
@@ -82,7 +82,7 @@ class NSItemProviderExtensionsSpec: QuickSpec {
 
             describe("loadImage(_:completion)") {
 
-                it("returns an image") {
+                xit("returns an image") {
                     let expectedImage = UIImage()
                     let item = NSItemProvider(item: expectedImage, typeIdentifier: String(kUTTypeImage))
                     waitUntil(timeout: 30) { done in
